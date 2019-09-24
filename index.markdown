@@ -5,10 +5,11 @@
 layout: home
 ---
 
-Hello world
+## OEIS sequences
+The [Online Encylopedia of Integer Sequences](http://oeis.org) is an endless source of fun projects.
+
+- [Van Eck's sequence](vaneck/vaneck.html) ([A181391](http://oeis.org/A181391))
+- Recaman sequence
+- Hofstadter's Q-sequence
 
 [test page](test.html)
-
-{%- if page.title -%}
-  {{ page.title }}
-{%- endif -%}
