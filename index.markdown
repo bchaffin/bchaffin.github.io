@@ -11,5 +11,3 @@ The [Online Encylopedia of Integer Sequences](http://oeis.org) is an endless sou
 - [Van Eck's sequence](vaneck/vaneck.html) ([A181391](http://oeis.org/A181391))
 - Recaman sequence
 - Hofstadter's Q-sequence
-
-[test page](test.html)
