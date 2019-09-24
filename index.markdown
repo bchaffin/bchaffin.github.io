@@ -4,3 +4,11 @@
 
 layout: home
 ---
+
+Hello world
+
+[test page](test.html)
+
+{%- if page.title -%}
+  {{ page.title }}
+{%- endif -%}
