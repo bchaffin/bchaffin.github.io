@@ -72,7 +72,7 @@ this:
 
 {% highlight C %}
 typedef struct {
-  unsigned long val : 40;
+  unsigned long position : 40;
 } __attribute__ ((packed)) table_entry_t;
 {% endhighlight %}
 
@@ -147,9 +147,9 @@ size.
 
 Finally, the size of the offset means that there's a limit on how many
 collisions we can have in a row when inserting a value. To get around
-this, if we reach the collision limit (2<sup>offset</sup> occupied
-entries in a row) then we fall back on a small secondary hash table
-which stores the full value and position.
+this, if we reach the collision limit (2<sup>offset_size</sup>
+occupied entries in a row) then we fall back on a small secondary hash
+table which stores the full value and position.
 
 The size of the hash table determines how many bits of the value you
 can extract from the hash index, and thus how many upper bits have to
@@ -158,8 +158,8 @@ entries, we can use this structure:
 
 {% highlight C %}
 typedef struct {
-  unsigned long val : 40;
-  unsigned long upper_term : 4;
+  unsigned long position : 40;
+  unsigned long upper_value : 4;
   unsigned long offset : 12;
 } __attribute__ ((packed)) hash_entry_t;
 {% endhighlight %}
