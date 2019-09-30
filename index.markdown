@@ -9,5 +9,6 @@ layout: home
 The [Online Encylopedia of Integer Sequences](http://oeis.org) is an endless source of fun projects.
 
 - [Van Eck's sequence](vaneck/vaneck.html) ([A181391](http://oeis.org/A181391))
+- [Multiplicative persistence](persistence/persistence.html) ([A003001](http://oeis.org/A003001))
 - Recaman sequence
 - Hofstadter's Q-sequence
