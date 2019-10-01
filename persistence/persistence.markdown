@@ -146,6 +146,6 @@ that 11 is the maximum persistence, but the base-10 digits of
 random. There are 3.3 billion 20000-digit "candidates" which are a
 product of digits, and the chances of any one of them not having a 0
 is less than 1 in 10<sup>-915</sup>. With each additional digit, the
-number of candidates grows by only a tiny fraction, but the chances of
+number of candidates grows by only a tiny fraction, but the chance of
 not having a 0 is multiplied by 0.9. So it seems very unlikely that
 there will be any more numbers with even persistence 3.
