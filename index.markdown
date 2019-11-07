@@ -8,7 +8,14 @@
 # coin sliding
 # G4G exchanges
 # magic square of squares
+# superpermutations
+# preheat
+# no three in line
 #
+
+## Other games & puzzles
+#
+#- [Coin-sliding puzzles](coin-sliding/coin-sliding.html) by [Erik Demaine](https://erikdemaine.org/)
 
 layout: home
 ---
@@ -28,3 +35,7 @@ endless source of fun projects.
 - [Multiplicative persistence](persistence/persistence.html) ([A003001](https://oeis.org/A003001))
 - [Zeros in powers of 2](twozeros/twozeros.html) ([A006889](https://oeis.org/A006889))
 - [Matchstick squares](matchsticks/matchsticks.html) ([A294249](https://oeis.org/A294249))
+
+## Hardware
+
+- [Building a Skylake system](skylake/skylake.html)
