@@ -40,8 +40,8 @@ conclusions, for any other newbies who are trying to figure this out.
 - [Measuring the system](#measuring-the-system)
 - [Overclocking](#overclocking-the-i9-9980xe)
 - [AVX settings](#avx-settings)
-- [BIOS settings](#complete-bios-settings)
 - [Useful MSRs](#useful-msrs)
+- [BIOS settings](#complete-bios-settings)
 
 ## Case
 
@@ -236,7 +236,7 @@ AVX2, AVX3, and non-vector code.
 a good vector benchmark to see whether you are hitting thermal or power
 consraints when running vector code.
 - [Intel memory latency checker](https://software.intel.com/en-us/articles/intelr-memory-latency-checker) --
-measures memory bandiwdth, idle latency, and loaded latency. Good for
+measures memory bandwidth, idle latency, and loaded latency. Good for
 verifying that your memory's XMP profile is actually doing something.
 
 ## Overclocking the i9-9980XE
@@ -275,10 +275,10 @@ rest at 4.4, steady with no jitter from turboing down and up.
 ## AVX settings
 
 But of course it's never that simple. Vector code can draw a lot of
-power, so the frequency drops more when AVX code -- more for AVX3
-(512-bit vectors) than for AVX2 (256-bit vectors). There's an entirely
-different profile of frequencies vs. number of active cores when
-running AVX code. The BIOS exposes this as "AVX offset" and "AVX3
+power, so the frequency drops more when running AVX code -- more for
+AVX3 (512-bit vectors) than for AVX2 (256-bit vectors). There's an
+entirely different profile of frequencies vs. number of active cores
+when running AVX code. The BIOS exposes this as "AVX offset" and "AVX3
 offset", which is how much the CPU ratio should drop by for each type
 of code.
 
@@ -291,7 +291,7 @@ the cores internally. In general this works fine, but it doesn't seem
 to play well with the per-core ratio limits. Setting it to "legacy"
 mode, which lets the operating system request frequencies, fixed
 that. As far as I can tell, this is a bug in the internal power
-management firmware of the CPU.
+management algorithms of the CPU.
 
 The second problem was that as I ran stress tests which used AVX3 on
 more cores, the performance (and power consumption) would suddenly
@@ -308,11 +308,11 @@ Up through 11 threads, the results are as you would expect -- it jumps
 up and down because linpack likes the number of threads to be a power
 of 2 (or at least even), but higher frequencies give higher
 performance. (At 4.2GHz, the system reset when trying to run 11
-threads 11 threads. I guess that is Just Too Fast.)
+threads. I guess that is Just Too Fast.)
 
 But starting at 12 threads, the higher frequencies fall off a
-cliff. Lower frequencies survive with more threads, but eventually
-they all suffer greatly reduced performance.
+cliff. Lower frequencies can handle more threads before dropping off,
+but eventually they all suffer greatly reduced performance.
 
 After a lot of experimentation I concluded that this is due to
 internal throttling, in response to voltage droop caused by too much
@@ -333,23 +333,6 @@ off. It's not as dramatic as before, but 4.1GHz is about 15% slower
 than 3.7GHz, so it's significant. 3.7GHz seems to be the sweet spot,
 so that's where I left it. (AVX2 is set to run at 3.9GHz, which is the
 Intel default. I don't expect to see a lot of AVX2 code.)
-
-## Complete BIOS settings
-
-Mostly for my own records, here is the full list of BIOS settings I
-changed from the defaults:
-
-- Override turbo ratio limits to say turbo to 45 with any number of cores
-- Use per-core limits to set 16 cores to 44 and two favored cores to 45
-- Set AVX/AVX3 offsets to 6/8 to get ratio 39/37
-- Disable hardware P-states to work around 700MHz bug
-- Set TjMax to 100C
-- Set dynamic load line calibration to 'extreme'. Without this, AVX
-workloads would throttle around 17-18 threads. With this, can run 36
-threads of mprime AVX3 at 37.
-- Override L1/L2 power limits and current limits to max
-- Enable package C-states -- saves 10W at idle
-- Enable XMP profile for DRAM
 
 ## Useful MSRs
 
@@ -428,4 +411,21 @@ in HWP_REQUEST is set
   - 6/7 - thermal threshold #1/log
   - 8/9 - thermal threshold #2/log
   - 10/11 - power limit/log
+
+## Complete BIOS settings
+
+Mostly for my own records, here is the full list of BIOS settings I
+changed from the defaults:
+
+- Override turbo ratio limits to say turbo to 45 with any number of cores
+- Use per-core limits to set 16 cores to 44 and two favored cores to 45
+- Set AVX/AVX3 offsets to 6/8 to get ratio 39/37
+- Disable hardware P-states to work around 700MHz bug
+- Set TjMax to 100C
+- Set dynamic load line calibration to 'extreme'. Without this, AVX
+workloads would throttle around 17-18 threads. With this, can run 36
+threads of mprime AVX3 at 37.
+- Override L1/L2 power limits and current limits to max
+- Enable package C-states -- saves 10W at idle
+- Enable XMP profile for DRAM
 
