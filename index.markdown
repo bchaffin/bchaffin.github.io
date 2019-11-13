@@ -13,10 +13,6 @@
 # no three in line
 #
 
-## Other games & puzzles
-#
-#- [Coin-sliding puzzles](coin-sliding/coin-sliding.html) by [Erik Demaine](https://erikdemaine.org/)
-
 layout: home
 ---
 
@@ -27,6 +23,10 @@ interested. (And so I can remember them.)
 If you have any fresh insight into any of these puzzles, I'd love to
 hear about it! You can reach me at chaffin (at) gmail (dot) com.
 
+## Hardware
+
+- [Building a Skylake system](skylake/skylake.html)
+
 ## OEIS sequences
 The [Online Encylopedia of Integer Sequences](http://oeis.org) is an
 endless source of fun projects.
@@ -36,6 +36,6 @@ endless source of fun projects.
 - [Zeros in powers of 2](twozeros/twozeros.html) ([A006889](https://oeis.org/A006889))
 - [Matchstick squares](matchsticks/matchsticks.html) ([A294249](https://oeis.org/A294249))
 
-## Hardware
+## Other games & puzzles
 
-- [Building a Skylake system](skylake/skylake.html)
+- [Coin-sliding puzzles](coin-sliding/coin-sliding.html) by [Erik Demaine](https://erikdemaine.org/)
