@@ -5,12 +5,13 @@
 # TBD:
 # Recaman
 # worms
-# coin sliding
 # G4G exchanges
 # magic square of squares
 # superpermutations
 # preheat
 # no three in line
+# 7-piece puzzle
+# weiferich primes
 #
 
 layout: home
@@ -26,6 +27,7 @@ hear about it! You can reach me at chaffin (at) gmail (dot) com.
 ## Hardware
 
 - [Building a Skylake system](skylake/skylake.html)
+- [A smarter thermostat](preheat/preheat.html) -- turning the heat on at the right time
 
 ## OEIS sequences
 The [Online Encylopedia of Integer Sequences](http://oeis.org) is an
