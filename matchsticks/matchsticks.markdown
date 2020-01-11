@@ -106,14 +106,14 @@ so should be skipped if the board is still symmetrical).
 ### The inner loop
 
 With all that work out of the way, the core of the search is a pretty
-small recursive function. The board is represented as an array of N+1
-64-bit vectors, with 1=empty and 0=full. When we place a square, we
-need to figure out how many new matches were added, since it may
-overlap other squares. We can do this by ANDing the pre-computed masks
-with the affected rows and columns, and counting how many bits are set
-in the result. To count the bits we can use gcc's
-`__builtin_popcountl`, which on a modern Intel processor produces one
-3-cycle instruction.
+small recursive function. The board is represented as an array of
+2*(N+1) 64-bit vectors for the rows and columns, with 1=empty and
+0=full. When we place a square, we need to figure out how many new
+matches were added, since it may overlap other squares. We can do this
+by ANDing the pre-computed masks with the affected rows and columns,
+and counting how many bits are set in the result. To count the bits we
+can use gcc's `__builtin_popcountl`, which on a modern Intel processor
+produces one 3-cycle instruction.
 
 In general we just have to try every position of every square: even
 choices which look bad now because they add a lot of matches might
@@ -134,7 +134,7 @@ Having a good upper bound on the number of matches really cuts down
 the search space. To get a pretty good bound, we can do some quick,
 imperfect searches using heuristics.
 
-The first cut is to requiring all squares to be placed on the main
+The first cut is to require all squares to be placed on the main
 diagonal, down to some small size (typically 20) to allow for some
 variation in the endgame. This is a strong constraint and makes for a
 fast search, which produces very good (sometimes even optimal)
