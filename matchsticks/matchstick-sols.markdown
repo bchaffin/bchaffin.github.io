@@ -78,17 +78,17 @@ search beats the greedy and diagonal heuristics
 | 47	| unknown | unknown | 940	| 939	| 939 |
 | 48	| unknown | unknown | 970	| 968	| 968 |
 | 49	| unknown | unknown | 1000	| 999	| 999 |
-| 50	| unknown | unknown | 1030	| 1030	| 1037	|
+| 50	| unknown | unknown | 1030	| <span style="background:lightgreen">1030</span>	| 1037	|
 | 51	| unknown | unknown | 1062	| 1061	| 1061	|
 | 52	| unknown | unknown | 1094	| 1093	| 1093	|
-| 53	| unknown | unknown | 1126	| 1124	| 1122	|
+| 53	| unknown | unknown | 1126	| 1124	| <span style="background:lightgreen">1122</span>	|
 | 54	| unknown | unknown | 1158	| 1157	| 1157	|
-| 55	| unknown | unknown | 1190	| 1189	| 1186	|
-| 56	| unknown | unknown | 1222	| 1221	| 1217	|
-| 57	| unknown | unknown | 1254	| 1253	| 1250	|
-| 58	| unknown | unknown | 1286	| 1285	| 1281	|
-| 59	| unknown | unknown | 1318	| 1317	| 1311	|
-| 60	| unknown | unknown | 1350	| 1350	| 1359	|
+| 55	| unknown | unknown | 1190	| 1189	| <span style="background:lightgreen">1186</span>	|
+| 56	| unknown | unknown | 1222	| 1221	| <span style="background:lightgreen">1217</span>	|
+| 57	| unknown | unknown | 1254	| 1253	| <span style="background:lightgreen">1250</span>	|
+| 58	| unknown | unknown | 1286	| 1285	| <span style="background:lightgreen">1281</span>	|
+| 59	| unknown | unknown | 1318	| 1317	| <span style="background:lightgreen">1311</span>	|
+| 60	| unknown | unknown | 1350	| <span style="background:lightgreen">1350</span>	| 1359	|
 | 61	| unknown | unknown | 1384	| 1383	| 1383	|
 | 62	| unknown | unknown | 1418	| 1417	| 1417	|
 | 63	| unknown | unknown | 1452	| 1451	| 1451	|

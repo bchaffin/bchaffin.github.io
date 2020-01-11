@@ -17,7 +17,7 @@ this one my way.
 The OEIS has a [full list](https://oeis.org/A294249/a294249.txt) of
 what I believe to be the optimal answers up through 46 squares, and
 some best-known ones up through 63 squares. There's also [more
-information](matchstick-sols.txt) about which solutions are found
+information](matchstick-sols.html) about which solutions are found
 with which of the searches described below.
 
 Here are the first few best solutions:
