@@ -8,10 +8,11 @@
 # G4G exchanges
 # magic square of squares
 # superpermutations
-# preheat
 # no three in line
 # 7-piece puzzle
 # weiferich primes
+# hofstadter Q sequence
+# - [Magic square of squares](magic-squares/magic-squares.html)
 #
 
 layout: home
@@ -30,6 +31,7 @@ hear about it! You can reach me at chaffin (at) gmail (dot) com.
 - [A smarter thermostat](preheat/preheat.html) -- turning the heat on at the right time
 
 ## OEIS sequences
+
 The [Online Encylopedia of Integer Sequences](http://oeis.org) is an
 endless source of fun projects.
 
@@ -37,6 +39,7 @@ endless source of fun projects.
 - [Multiplicative persistence](persistence/persistence.html) ([A003001](https://oeis.org/A003001))
 - [Zeros in powers of 2](twozeros/twozeros.html) ([A006889](https://oeis.org/A006889))
 - [Matchstick squares](matchsticks/matchsticks.html) ([A294249](https://oeis.org/A294249))
+- [Repunit primes](repunit-primes/repunit-primes.html) ([A004023](https://oeis.org/A004023))
 
 ## Other games & puzzles
 
