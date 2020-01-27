@@ -285,9 +285,9 @@ should skip testing this pair.
 ### An alternate method
 
 This work was originally done around 2008, before Lee Morgenstern
-published [similar
-method](http://www.multimagie.com/English/Morgenstern08.htm) with a
-different way of generating two-square decompositions. Morgenstern's
+published a [different
+method](http://www.multimagie.com/English/Morgenstern08.htm) with an
+alternate way of generating two-square decompositions. Morgenstern's
 method is the same in that it generates magic squares with 5 squared
 cells and then checks the other 4 to see if they are squares. But his
 search comes from the opposite direction -- rather than choosing E and
