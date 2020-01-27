@@ -12,7 +12,6 @@
 # 7-piece puzzle
 # weiferich primes
 # hofstadter Q sequence
-# - [Magic square of squares](magic-squares/magic-squares.html)
 #
 
 layout: home
@@ -44,3 +43,4 @@ endless source of fun projects.
 ## Other games & puzzles
 
 - [Coin-sliding puzzles](coin-sliding/coin-sliding.html) by [Erik Demaine](https://erikdemaine.org/)
+- [Magic square of squares](magic-squares/magic-squares.html)
