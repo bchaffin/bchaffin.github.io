@@ -62,7 +62,7 @@ the Ecobee wants to use different wires for AC.
 I think it's very unlikely that this is a problem anyone will ever
 have to solve again; around 2012 Mitsubishi changed to allow control
 by a standard interface. But if for some reason you are trying to use
-a smart thermostate to control a pre-2012 Mitsubshi heat pump, and by
+a smart thermostat to control a pre-2012 Mitsubshi heat pump, and by
 some miracle you actually find this page, you are welcome to contact
 me and I'll reverse-engineer what I have.
 
