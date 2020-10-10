@@ -108,19 +108,8 @@ them all together.
 ### Generating center values
 
 The first step is to find values which could possibly work as E, the
-center cell. A theorem from Fermat tells us that:
-- Every prime of the form 4k+1 is a sum of two squares, and
-- A number is the sum of two squares if and only if all prime factors
-of the form 4k+3 have an even exponent in its prime factorization --
-in other words, the 4k+3 factors are all squared.
-
-You can take any magic square and just multiply all its elements by
-some number without losing its magic-ness. We're only interested in
-"minimal" magic squares where the cells don't all have a common
-factor, which means that we should consider only numbers which have
-only 4k+1 factors as possible values for E. Any 4k+3 factors would
-have to be squared, which would end up just multiplying all the cells
-by that value, which is redundant.
+center cell. From Fermat's theorem mentioned above, these are numbers
+with only 4k+1 factors.
 
 To generate numbers with 4k+1 factors, I do a one-time creation of a
 big list of the first 1,500,000,000 primes of the form 4k+1, which is
@@ -202,7 +191,7 @@ In more detail:
 
 We have two pairs of squares: a,b and c,d.
 
-Each pair of squares sums to 3E, making it a magic line through the
+Each pair of squares sums to 2E, making it a magic line through the
 center. So each pair needs to be on opposite sides of the center
 square. There are three possibilities:
 

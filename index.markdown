@@ -6,7 +6,6 @@
 # Recaman
 # worms
 # G4G exchanges
-# magic square of squares
 # superpermutations
 # no three in line
 # 7-piece puzzle
