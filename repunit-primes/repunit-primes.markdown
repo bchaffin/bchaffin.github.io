@@ -250,9 +250,14 @@ and running too many at once just thrashes the cache and slows
 everything down.
 
 After a lot of experimentation, for the size numbers I'm interested in
-(around 4 million digits), I settled on running four 8-threaded
-instances of PFGW on 16 cores (32 logical processors). One other core
-runs two threads of trial factoring.
+(around 4 million digits), I settled on running four 4-threaded
+instances of PFGW on 16 cores. Four 8-threaded instances gives
+slightly higher performance, but with 6 or more threads there is some
+resonance in the power draw, probably from threads rapidly starting
+and stopping high-power vector computations. It makes an irritating,
+high-pitched scritching sound, and is probably also producing some
+kind of mechanical stress somewhere, which seems bad. So four threads
+it is. One other core runs two threads of trial factoring. 
 
 A script ties them all together. It reads a list of R(n) values to be
 checked, maintains a pool of in-flight numbers which rotate through
@@ -269,9 +274,11 @@ known is R(270343), which was found in 2007.
 The [Repunit Primes
 Project](http://www.kurtbeschorner.de/rprimes-project.htm) has checked
 (as of December 2019) up a little past R(4000000), so I started at
-R(4500000). This project is ongoing -- at the moment it looks like
-searching the range from 4500000 - 4600000 will take about 3 months,
-so the next probable prime may still be far in the future.
+R(4500000).
+
+#### Completed searches
+
+[R(4500000) - R(4600000)](repunits-4500000-4600000.txt) -- no primes
 
 ## References
 
