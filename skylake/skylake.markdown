@@ -120,9 +120,22 @@ in some way that also took out the cable modem (despite no direct
 connection between them), and then just failed to boot. Good bye and
 good riddance.
 
+**Update:** I RMAed the dead board and got a replacement. After the
+Gigabyte board failed (see below), I returned to the ASRock for a
+period of a few weeks. This confirmed that the high CPU temperatures I
+had seen were due to the insufficient factory-supplied thermal grease
+on the Corsair cooler (also see below). But the VRMs were still just
+not up to the job. Even with dual additional fans mounted on the
+heatsinks, it was unable to sustain high loads on all cores for any
+length of time.
+
+Conclusion: this is probably a good board for the price if you want to
+run yout system at stock settings, or if you want to overclock a
+relatively low-core-count processor. But it can't handle 18 cores.
+
 ## Motherboard, take two
 
-#### [Gigabyte X299 Aorus Master](https://www.gigabyte.com/us/Motherboard/X299-AORUS-MASTER-rev-10), 4.5 stars
+#### [Gigabyte X299 Aorus Master](https://www.gigabyte.com/us/Motherboard/X299-AORUS-MASTER-rev-10), 2.5 stars
 
 Having learned some things about what features I needed in a
 motherboard, this time around I chose the [Gigabyte X299 Aorus
@@ -147,10 +160,9 @@ makes an unpleasant whine at high speeds. Since I had some extra fans
 anyway, I mounted a 40mm Noctua fan in front of the main VRM heatsink,
 which lets the integrated fan run slower and quieter.
 
-As of this writing the board is only a week old, but so far I'm happy
-with it. My only complaint is some strange fan control behavior when
-using the FAN5/6 connectors -- I switched to different connectors and
-it hasn't recurred so far.
+My only complaint on initial setup was some strange fan control
+behavior when using the FAN5/6 connectors -- I switched to different
+connectors and it didn't recur.
 
 Out of the box, the Ubuntu 18.04 lm-sensors package was unable to talk
 to any of the on-board sensors to read temperature and fan speeds. It
@@ -174,9 +186,88 @@ sudo modprobe it87 ignore_resource_conflict
 # Add it87 ignore_resource_conflict to /etc/modules
 ```
 
+#### But...
+
+The system ran stably for about 5 months, including about 2 months of
+a heavy AVX workload. Then it started getting memory corruption
+errors -- bit flips and dropped writes to DRAM. I did extensive
+experiments with various memory testing programs (including writing my
+own), and swapping DIMMs around in every way possible. Eventually I
+concluded that the failure did not seem tied to any one DIMM, and so
+was either the motherboard or the CPU.
+
+I RMAed the motherboard, and waited 6 weeks for Gigabyte to conclude
+it was a "user BIOS programming error", reflash the BIOS, and return
+me the same board. The memory errors still occurred, and furthermore,
+whereas before I had been able to run 36 threads of prime95 small FFTs
+at 3.7GHz, now it would only run at 3.1GHz. At 3.2 and above it would
+hang or shut down immediately when the threads were launched, which
+sounds like a voltage droop problem.
+
+While waiting for the replacement I had returned to the ASRock board,
+which (despite its problems) was still able to run both CPU and DRAM
+at the expected frequencies, so it seemed the motherboard was bad. My
+guess is that something in the power delivery electronics started to
+wear out after a few months of steady high-power usage. It's
+disappointing that the Gigabyte RMA process was not able to diagnose
+this.
+
+## Motherboard, take three
+
+#### [ASUS ROG Strix X299-E Gaming II](https://asus.com/us/Motherboards/ROG-Strix-X299-E-Gaming-II/), 4 stars
+
+Continuing my trend of buying ever-more-expensive motherboards, I
+upgraded to the ASUS ROG Strix X299-E Gaming II, which is a mouthful
+of a brand name. It has comparable features to the Gigabyte Aorus
+Master, and has an integrated fan over the primary VRM heatsink.
+
+Tweaking the BIOS settings was generally similar to the other boards,
+with one major difference. By default it wanted to drive extremely
+high voltage to the cores: at its automatic settings, running 36
+threads of prime95 AVX-512 small FFTs at 3.7GHz, the wall power spiked
+to over 750W and the CPU temperatures hit 110C before I quickly shut
+it down to avoid frying something.
+
+Playing with the load-line settings, and various other power-control
+knobs whose effect was not really documented, didn't seem to make any
+difference. So I tried using 'voltage offset mode', and telling it to
+reduce the voltage to each core by 100mV from its default (which
+varies per core). It booted and would run the prime95 test briefly,
+but it quickly got numerical errors.
+
+So I tried reducing the voltage by only 50mV on each core... and it
+was stable. The prime95 small FFT test drew about 550W at the wall,
+which was comparable to what I had seen with the Gigabyte board. And
+it was able to sustain that with no errors for many hours, and also
+prime95 large FFTs (which stress memory), and memtest x86. The VRMs
+stay impressively cool, with the fan barely spinning even under heavy
+load.
+
+Since I care a lot about getting the right answers, it's a little
+unnerving to have just picked an arbitrary voltage. But I guess stable
+is stable...
+
+A few complaints:
+- There is no BIOS support for controlling the LED colors (all you can
+do is turn them off), and I haven't found any Linux support that
+doesn't require compiling a custom kernel. So you're stuck with the
+default of cycling through the spectrum. At least allowing BIOS to set
+the lights to a fixed color would be nice, and easy.
+- The fan settings have the bizarre limitation that the highest
+temperature setting you can use to adjust the fan speed is 75C --
+above that any fan will run at 100%. So if you wanted, say, your case
+fans not to hit full speed until the CPU is over 90C... well, you
+can't. Instead I used the included temperature probe to measure the
+DRAM temperature, and set the case fans based on that, which is
+working reasonably well.
+
+As of this writing, the system has been up for about a week. Based on
+the Gigabyte experience, it's too soon to tell whether this board will
+finally be my last. But at least it's off to a good start.
+
 ## Cooling
 
-#### [Corsair H115i Pro](https://www.corsair.com/us/en/Categories/Products/Liquid-Cooling/Hydro-Series%E2%84%A2-H115i-PRO-RGB-280mm-Liquid-CPU-Cooler/p/CW-9060032-WW), 4 stars
+#### [Corsair H115i Pro](https://www.corsair.com/us/en/Categories/Products/Liquid-Cooling/Hydro-Series%E2%84%A2-H115i-PRO-RGB-280mm-Liquid-CPU-Cooler/p/CW-9060032-WW), 3.5 stars
 
 I wanted a solid radiator to dissipate the CPU heat. A 140x280mm
 radiator has nearly as much surface area as a 120x360mm, and is
@@ -187,13 +278,16 @@ has worked fine.
 I do have two complaints:
 - The pre-applied thermal paste is not nearly sufficient for a large
 CPU package like the LGA-2066. When I removed the cooler to replace
-the motherboard I found the circle of thermal paste to be dry and
-crumbly, and not nearly covering the whole package surface.
+the motherboard I found the circle of thermal paste (why is it a
+circle when CPUs are square?) to be dry and crumbly, and not nearly
+covering the whole package surface.
 - The Corsair adjusts its fan speeds based on the coolant temperature,
 but the pump only has three static speeds. To be able to run heavy
 loads, I have it set to "performance mode", but that means it's
 running at full speed all the time, and when the system is idle and
-all the fans are slow, the pump noise is noticeable.
+all the fans are slow, the pump noise is noticeable. For the price,
+you would think that a temperature-sensitive pump speed wouldn't be
+that hard.
 
 As with most components aimed at the gamer market, there is no
 official Linux support whatsoever. Fortunately I found
