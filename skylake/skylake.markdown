@@ -241,7 +241,20 @@ which was comparable to what I had seen with the Gigabyte board. And
 it was able to sustain that with no errors for many hours, and also
 prime95 large FFTs (which stress memory), and memtest x86. The VRMs
 stay impressively cool, with the fan barely spinning even under heavy
-load.
+load. The default load-line calibration was level 2 out of 8 (second
+most aggressive in trying to maintain voltage under load), and I did
+not have to modify that.
+
+One benefit is that I got noticeably better memory bandwidth, as
+measured by Intel's [MLC
+tool](https://software.intel.com/en-us/articles/intelr-memory-latency-checker). With
+the ASRock board the unloaded bandwidth was about 95GB/s. The Gigabyte
+was significantly lower, about 91GB/s. The ASUS is the best by a small
+margin, about 96GB/s. Since the processor and DIMMs are the same in
+all cases, I don't know what the source of the difference is --
+possibly the routing of the traces from the DIMM slots to the CPU
+varies from board to board, and affects the latencies that are
+computed during memory training.
 
 Since I care a lot about getting the right answers, it's a little
 unnerving to have just picked an arbitrary voltage. But I guess stable
