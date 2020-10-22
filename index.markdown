@@ -43,3 +43,14 @@ endless source of fun projects.
 
 - [Coin-sliding puzzles](coin-sliding/coin-sliding.html) by [Erik Demaine](https://erikdemaine.org/)
 - [Magic square of squares](magic-squares/magic-squares.html)
+
+## Coming eventually
+
+- [The Recaman Sequence](https://oeis.org/A005132)
+- [Paterson's Worms](https://en.wikipedia.org/wiki/Paterson%27s_worms)
+- [Gathering for Gardner](https://www.gathering4gardner.org/) exchange gifts
+- [Superpermutations](https://www.gregegan.net/SCIENCE/Superpermutations/Superpermutations.html)
+- [No-three-in-line problem](http://oeis.org/A000769)
+- A 7-piece vanishing-square puzzle
+- [Weiferich primes](http://oeis.org/A001220)
+- [Hofstadter Q sequence](http://oeis.org/A005185)

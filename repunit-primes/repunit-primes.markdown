@@ -265,6 +265,27 @@ trial factoring, and as each PFGW job completes it takes the number
 from the pool which has had the most trial factoring and hands it off
 to PFGW.
 
+## Update, October 2020
+
+I got a bit of an education from Danilo Nitsche of the [Repunit Primes
+Project](http://kurtbeschorner.de/). Trial factoring of repunits is
+much more efficiently done with a GPU, using an algorthm roughly
+similar to what's described above, but massively parallel. Everything
+under R(5000000) has been trial factored far beyond what can be done
+with a general-purpose core.
+
+Also, [prime95](https://www.mersenne.org/download/) is substantially
+faster than PFGW for probable prime checks. Running 2 four-threaded
+workers and 3 three-threaded workers (one thread per core) gives the
+best throughput -- about 30% more than with PFGW.
+
+The syntax for prime95's worktodo.txt file is not well documented, but
+thanks to Danilo here it is:
+
+    [Worker #1]
+    PRP=1,10,4371223,-1,99,0,3,1,"9"
+
+
 ## Results
 
 [A004023](https://oeis.org/A004023) gives the indices of the repunits
@@ -272,9 +293,9 @@ which are known to be prime or probably prime. The largest currently
 known is R(270343), which was found in 2007.
 
 The [Repunit Primes
-Project](http://www.kurtbeschorner.de/rprimes-project.htm) has checked
-(as of December 2019) up a little past R(4000000), so I started at
-R(4500000).
+Project](http://kurtbeschorner.de/) has checked (as of October 2020)
+up a little past R(4375000). Before learning that I started at
+R(4500000), with results below.
 
 #### Completed searches
 
