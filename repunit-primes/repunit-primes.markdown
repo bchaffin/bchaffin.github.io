@@ -268,7 +268,7 @@ to PFGW.
 ## Update, October 2020
 
 I got a bit of an education from Danilo Nitsche of the [Repunit Primes
-Project](http://kurtbeschorner.de/). Trial factoring of repunits is
+Project](https://kurtbeschorner.de/). Trial factoring of repunits is
 much more efficiently done with a GPU, using an algorthm roughly
 similar to what's described above, but massively parallel. Everything
 under R(5000000) has been trial factored far beyond what can be done
@@ -293,7 +293,7 @@ which are known to be prime or probably prime. The largest currently
 known is R(270343), which was found in 2007.
 
 The [Repunit Primes
-Project](http://kurtbeschorner.de/) has checked (as of October 2020)
+Project](https://kurtbeschorner.de/) has checked (as of October 2020)
 up a little past R(4375000). Before learning that I started at
 R(4500000), with results below.
 
