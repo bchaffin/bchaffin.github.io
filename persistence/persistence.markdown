@@ -101,8 +101,10 @@ product of the digits to get the final persistence value.
 
 ### Results
 
-It appears that there are exactly two numbers with persistence 11, and
-that's the best you can do.
+It appears that there are exactly two numbers which are a product of
+digits and have persistence 10 -- meaning there are two "interestingly
+different" starting numbers with persistence 11 -- and that's the best
+you can do.
 
 Remember that we are searching numbers _P_ which are the product of
 the digits of some other (larger) number. If one of those has a
@@ -138,6 +140,9 @@ multiplicative persistence of n. The following are true of all p(n) <
 
 All p(n) between 10<sup>140</sup> and 10<sup>20000</sup> have a
 persistence of 1, meaning they contain a 0 digit.
+
+Here is [a list](all-persistence.txt) of all numbers up to
+10<sup>20000</sup> which are a product of digits and have persistence >= 2.
 
 Of course this search doesn't prove
 that 11 is the maximum persistence, but the base-10 digits of
