@@ -3,6 +3,9 @@ layout: post
 title:  "The Recaman Sequence"
 date:   2024-02-20
 ---
+
+### Work in progress
+
 The _persistence_ of a number is how many times you need to multiply
 the digits together before you get to a single digit. Brady Haran and
 Matt Parker made a fun [Numberphile](https://www.numberphile.com)
