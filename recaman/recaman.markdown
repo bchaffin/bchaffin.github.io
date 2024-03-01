@@ -30,7 +30,9 @@ All that takes a little fiddling to get right, but the real kicker is the part a
 
 ### Little big numbers
 
-We're going to be getting into some pretty big numbers. There are plenty of libraries like GMP which handle arbitrary-precision integers, but this problem has some unique constraints: the numbers will span a huge range, and we want to store as many numbers as possible as densely as possible, so we don't want to waste any data storage space, or to pay the typical overhead of storing some additional metadata (e.g. the number's size) with every number. Instead
+We're going to be getting into some pretty big numbers. There are plenty of libraries like GMP which handle arbitrary-precision integers, but their numbers are typically implemented as a data structure which has a storage array of 64-bit elements for the data, and some additional fields containing other information about the number, like its size. Also the storage array may be dynamically allocated, which means there is additional metadata maintained by the `malloc` library. The numbers of this sequence are big-ish, but not _that_ big -- up to a couple hundred bytes -- so that overhead is significant. I want to store as many numbers as possible as densely as possible, without any space wasted on metadata or padding out to a multiple of 64 bits.
+
+There's always a price to be paid somewhere. My solution is extremely space-efficient, not to bad for performance, and terrible for complexity and code size. I use C++ templates to create a different class for numbers of each different size in bytes. The 
 
 ### OLD
 
