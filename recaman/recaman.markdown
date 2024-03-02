@@ -17,12 +17,12 @@ The definition is simple: the first term, a(0), is 0. Then to get the nth term, 
 - For a(3), we try subtracting 3 from a(2)=3, but 0 has already appeared at a(0), so we add to get a(3) = 6.
 - For a(4), we try subtracting 4 from a(3)=6, and this time it works: 2 is positive and has not already appeared, so a(4) = 2.
 
-<img src="rec-100.png" width="400"> <img src="rec-1000.png" width="400">
-<img src="rec-10000.png" width="400"> <img src="rec-100000.png" width="400">
+<img src="rec-100.png" width="375"> <img src="rec-1000.png" width="375">
+<img src="rec-10000.png" width="375"> <img src="rec-100000.png" width="375">
 
-[![Recaman sequence 100 terms](rec-100.png)](rec-100.png) [![Recaman sequence 1000 terms](rec-1000.png)](rec-1000.png)
-[![Recaman sequence 10000 terms](rec-10000.png)](rec-10000.png)
-[![Recaman sequence 100000 terms](rec-100000.png)](rec-100000.png)
+![Recaman sequence 100 terms](rec-100.png) ![Recaman sequence 1000 terms](rec-1000.png)
+![Recaman sequence 10000 terms](rec-10000.png)
+![Recaman sequence 100000 terms](rec-100000.png)
 
 TBD: graphs, characterization of overall behavior, questions and goal of computation
 
@@ -30,20 +30,47 @@ TBD: graphs, characterization of overall behavior, questions and goal of computa
 
 Computing terms of the sequence one by one is easy, just following the rule above. But we can go faster: in the graphs above we can see that the sequence tends to alternate addition and subtraction, ping-ponging between two ranges of consecutive numbers. For example, terms a(6) - a(17) are: 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, 8, 25; these form a lower range of 13 down to 8, and an upper range of 20 up to 25. In general, this ping-pong pattern will continue until one of two things happens:
 
-1) The lower range bumps into a number which has already appeared in the sequence, so we can't subtract; then we add twice in a row
-2) The lower range passes over a "hole" farther down which allows us to subtract twice in a row
+1. The lower range bumps into a number which has already appeared in the sequence, so we can't subtract; then we add twice in a row
+2. The lower range passes over a "hole" farther down which allows us to subtract twice in a row
 
 At the beginning of a ping-pong section, we can look ahead to find the which of these two terminal conditions will happen first and in how many steps, and then we know that all the intervening terms form two contiguous ranges, without having to compute them individually. In practice, the ping-pong sections get exponentially longer as the sequence progresses, so the computation also accelerates.
 
 Detecting condition #1 is relatively easy; we just look for the closest number below the lower range which is already taken. Condition #2 is more complicated, because only every third number is tested. Using the same example as above, a(6)=13; to get a(7) we try 13-7=6, which has already appeared. In this case 6 was the potential "hole" which would have allowed us to subtract twice in a row. Now a(8)=12, and to get a(9) we try 12-9=3; 3 is the potential "hole". So to detect condition #2 we need to find the first lower untaken number which is a multiple of 3 steps away.
 
-All that takes a little fiddling to get right, but the real kicker is the part about whether a number has already appeared in the sequence: you have to remember its entire history! From here on, it's all about how to efficiently store and compute with these vast quantities of data.
+All that takes a little fiddling to get right, but the real kicker is the part about whether a number has already appeared in the sequence: you have to remember its entire history, and be able to refer back to it constantly! From here on, it's all about how to efficiently store and compute with these vast quantities of data.
 
 ### Little big numbers
 
 We're going to be getting into some pretty big numbers. There are plenty of libraries like GMP which handle arbitrary-precision integers, but their numbers are typically implemented as a data structure which has a storage array of 64-bit elements for the data, and some additional fields containing other information about the number, like its size. Also the storage array may be dynamically allocated, which means there is additional metadata maintained by the `malloc` library. The numbers of this sequence are big-ish, but not _that_ big -- up to a couple hundred bytes -- so that overhead is significant. I want to store as many numbers as possible as densely as possible, without any space wasted on metadata or padding out to a multiple of 64 bits.
 
-There's always a price to be paid somewhere. My solution is extremely space-efficient, not to bad for performance, and terrible for complexity and code size. I use C++ templates to create a different class for numbers of each different size in bytes. The 
+There's always a price to be paid somewhere. My solution is extremely space-efficient, not too bad for performance, and terrible for complexity and code size. I use C++ templates to create a different class for numbers of each different size in bytes. The operators for addition, comparison, etc. are overridden to work on arbitrary-sized arrays of bytes.
+
+I went through many versions of C code, inline assembly, and compiler intrinsics over the years to try to get these to use well-performing code. Most recently, I found that the [clang](https://clang.llvm.org/) compiler can recognize a specific code pattern as being a multi-precision add or subtract. So the routine for the `+=` operator looks like this, `n` is an array of bytes, `b` is the template parameter which is the length of `n`, and `U64`, `U32` and `U16` are macros which cast the argument to be a 64/32/16-bit pointer and dereference it:
+
+```
+    int64_t carry=0;
+
+    for (int i=0; i<=b-8; i+=8) {
+        int128_t temp = (int128_t)carry + U64(n+i) + U64(x.n+i);
+        U64(n+i) = temp;
+        carry = temp >> 64;
+    }
+
+    if (b & 0x4) {
+        int64_t temp = (int64_t)carry + U32(n+(b&(~0x7))) + U32(x.n+(b&(~0x7)));
+        U32(n+(b&(~0x7))) = temp;
+        carry = temp >> 32;
+    }
+    if (b & 0x2) {
+        int32_t temp = (int32_t)carry + U16(n+(b&(~0x3))) + U16(x.n+(b&(~0x3)));
+        U16(n+(b&(~0x3))) = temp;
+        carry = temp >> 16;
+    }
+    if (b & 0x1)
+        n[b-1] = carry + n[b-1] + x.n[b-1];
+```
+
+Since `b` is known at compile time, this produces the optimal sequence of add-carry instructions: as many 64-bit add-carrys as needed, and maybe 4/2/1-byte add-carrys to finish off the bytes at the top, if needed depending on the size of the number.
 
 ### OLD
 
