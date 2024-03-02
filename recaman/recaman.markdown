@@ -6,7 +6,10 @@ date:   2024-02-20
 
 
 ### The Recamán Sequence
+
 The [Recamán sequence](https://en.wikipedia.org/wiki/Recam%C3%A1n%27s_sequence) is a fascinating integer sequence. It is in the [OEIS](https://oeis.org/) as [A005132](https://oeis.org/A005132); in fact its first terms spiral around the outside of the OEIS logo. It features in the Numberphile video [The Slightly Spooky Recamán Sequence](https://www.youtube.com/watch?v=FGC5TdIiT9U). It has inspired some [beautiful artwork](https://oeis.org/A005132/a005132_1.png), and is discussed in many places on the internet.
+
+I first heard of this sequence in a talk by Neil Sloane in 2006, and I have returned to it many times over the years, through many generations of computing hardware and compilers. Altogether I've probably invested more time and energy in this project than almost any other.
 
 The definition is simple: the first term, a(0), is 0. Then to get the nth term, we subtract n from the previous term, if the result would be non-negative and has not already appeared in the sequence; otherwise, we add n to the previous term. (Duplicate terms are allowed when adding.) So to get the first few terms:
 - For a(1), we try subtracting 1 from a(0)=0, but that's negative, so instead we add to get a(1) = 1.
@@ -14,11 +17,19 @@ The definition is simple: the first term, a(0), is 0. Then to get the nth term, 
 - For a(3), we try subtracting 3 from a(2)=3, but 0 has already appeared at a(0), so we add to get a(3) = 6.
 - For a(4), we try subtracting 4 from a(3)=6, and this time it works: 2 is positive and has not already appeared, so a(4) = 2.
 
+<img src="rec-100.png" width="400"> <img src="rec-1000.png" width="400">
+<img src="rec-10000.png" width="400"> <img src="rec-100000.png" width="400">
+
+[![Recaman sequence 100 terms](rec-100.png)](rec-100.png) [![Recaman sequence 1000 terms](rec-1000.png)](rec-1000.png)
+[![Recaman sequence 10000 terms](rec-10000.png)](rec-10000.png)
+[![Recaman sequence 100000 terms](rec-100000.png)](rec-100000.png)
+
 TBD: graphs, characterization of overall behavior, questions and goal of computation
 
 ### Computing it
 
 Computing terms of the sequence one by one is easy, just following the rule above. But we can go faster: in the graphs above we can see that the sequence tends to alternate addition and subtraction, ping-ponging between two ranges of consecutive numbers. For example, terms a(6) - a(17) are: 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, 8, 25; these form a lower range of 13 down to 8, and an upper range of 20 up to 25. In general, this ping-pong pattern will continue until one of two things happens:
+
 1) The lower range bumps into a number which has already appeared in the sequence, so we can't subtract; then we add twice in a row
 2) The lower range passes over a "hole" farther down which allows us to subtract twice in a row
 
