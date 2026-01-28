@@ -3,6 +3,18 @@ layout: post
 title:  "Zeros in Powers of 2"
 date:   2019-10-01
 ---
+### Update, January 2026: 20 zeros found
+
+The number
+
+## **2<sup>27,042,795,698</sup>**
+
+has 8,140,692,672 decimal digits: 51388 ... 80831<span style="color:red">**00000000000000000000**</span>38906 ... 45344.
+
+And with that, I think I'm done with this problem, at least for now!
+
+### The problem
+
 This might be the most mathematically pointless project in my whole
 list. Algorithmically, though, it got pretty interesting. And it's one
 of my favorite examples of OEIS serendipity -- I stumbled across this
