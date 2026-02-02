@@ -43,19 +43,25 @@ All that takes a little fiddling to get right, but the real kicker is the part a
 
 We're going to be getting into some pretty big numbers. There are plenty of libraries like GMP which handle arbitrary-precision integers, but their numbers are typically implemented as a data structure which has a storage array of 64-bit elements for the data, and some additional fields containing other information about the number, like its size. Also the storage array may be dynamically allocated, which means there is additional metadata maintained by the `malloc` library. The numbers of this sequence are big-ish, but not _that_ big -- up to a couple hundred bytes -- so that overhead is significant. I want to store as many numbers as possible as densely as possible, without any space wasted on metadata or padding out to a multiple of 64 bits.
 
-There's always a price to be paid somewhere. My solution is extremely space-efficient, not too bad for performance, and terrible for complexity and code size. I use C++ templates to create a different class for numbers of each different size in bytes. The operators for addition, comparison, etc. are overridden to work on arbitrary-sized arrays of bytes.
+There's always a price to be paid somewhere. My solution is extremely space-efficient, not too bad for performance, and terrible for complexity and code size. I use C++ templates to create a different class for numbers of each different size in bytes. The operators for addition, comparison, etc. are overridden to work on arbitrary-sized arrays of bytes, and the class is declared with `__attribute__ ((packed))` so that arrays of them will not be padded to get nice data alignment.
 
-I went through many versions of C code, inline assembly, and compiler intrinsics over the years to try to get these to use well-performing code. Most recently, I found that the [clang](https://clang.llvm.org/) compiler can recognize a specific code pattern as being a multi-precision add or subtract. So the routine for the `+=` operator looks like this, `n` is an array of bytes, `b` is the template parameter which is the length of `n`, and `U64`, `U32` and `U16` are macros which cast the argument to be a 64/32/16-bit pointer and dereference it:
+I went through many versions of C code, inline assembly, and compiler intrinsics over the years to try to get these to use well-performing code. Most recently, I found that the [clang](https://clang.llvm.org/) compiler can recognize a specific code pattern as being a multi-precision add or subtract. So the routine for the `+=` operator looks like this, where `n` is an array of bytes, `b` is the template parameter which is the length of `n`, and `U64`, `U32` and `U16` are macros which cast the argument to be a 64/32/16-bit pointer and dereference it:
 
 ```
+inline varnum<b>& operator += (const varnum<b> &x)
+{
     int64_t carry=0;
 
+    // Add all the full 8-byte chunks of x to this. The code uses 128-bit math to add the two
+    // sources plus carry-in and then extracts the carry-out from the upper 64 bits of the result,
+    // but the compiler should turn this into an efficient sequence of add-carry instructions.
     for (int i=0; i<=b-8; i+=8) {
         int128_t temp = (int128_t)carry + U64(n+i) + U64(x.n+i);
         U64(n+i) = temp;
         carry = temp >> 64;
     }
 
+    // Add any remaining upper bytes using 4/2/1-byte instructions
     if (b & 0x4) {
         int64_t temp = (int64_t)carry + U32(n+(b&(~0x7))) + U32(x.n+(b&(~0x7)));
         U32(n+(b&(~0x7))) = temp;
@@ -68,9 +74,31 @@ I went through many versions of C code, inline assembly, and compiler intrinsics
     }
     if (b & 0x1)
         n[b-1] = carry + n[b-1] + x.n[b-1];
+
+    return *this;
+}
 ```
 
 Since `b` is known at compile time, this produces the optimal sequence of add-carry instructions: as many 64-bit add-carrys as needed, and maybe 4/2/1-byte add-carrys to finish off the bytes at the top, if needed depending on the size of the number.
+
+Similar routines implement other basic operations like assignment, arithmetic, and comparison, with special cases for some common things like comparison to zero and comparison to x +/- 1. For div and mod by 3, I just convert to a GMP integer and use the library routines. 
+
+### Storing ranges
+
+It's much more efficient to store the sequence terms as ranges of consecutive numbers, since that's how our fast method for computing the terms operates. A good structure for quickly adding and removing ordered things is a [red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree). But a fast implementation of a red-black tree wants to store a bunch of stuff in each node, including pointers to its left and right children, parent, and next/previous nodes, which is a lot of storage overhead.
+
+One trick to cut the size of the pointers in half is to allocate a large single storage array up front, and use 32-bit indices into it, instead of actual 64-bit pointers. But it's still a lot of overhead. To amortize that cost, each node stores not just one range, but an array of ranges. The size of the array varies with the size of the numbers being stored in the tree, but is kept between 100 and 200. (The reason for not having a constant array size is explained below.)
+
+The basic `range_tree` is templated on the size of the `varnum` numbers in its ranges, and supports several key operations:
+- Adding a range: The new range may connect or overlap one or more ranges within a node, and/or span multiple nodes (which leads to _so many special cases_). If the new range combines with existing ranges then the node may end up with fewer valid ranges than it had before. If a new range needs to be inserted then the tail of the array is shifted over to make room; if the array is full then the last range is moved to a newly inserted node, making room to insert the new range.
+- Querying whether a particular number is present in any of the ranges.
+- Find the closest number lower than N which is used. This is the check for case #1 in the fast computation.
+- Find the closest number lower than N which is _not_ used and is a multiple of 3 away from N. This is the check for case #2.
+- Garbage collection: over time the tree gets cluttered with underutilized nodes, which occur when ranges coalesce or when new nodes containing a single range are inserted. When the ratio of invalid ranges gets too high, the tree repacks all ranges into full nodes, and recycles all extra nodes back into a freelist. It then shuffles the nodes in the underlying storage array so that they are located at sequential addresses, which helps with memory locality and paging (below).
+
+### Variable-sized ranges
+
+
 
 ### OLD
 
