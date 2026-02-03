@@ -85,20 +85,24 @@ Similar routines implement other basic operations like assignment, arithmetic, a
 
 ### Storing ranges
 
-It's much more efficient to store the sequence terms as ranges of consecutive numbers, since that's how our fast method for computing the terms operates. A good structure for quickly adding and removing ordered things is a [red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree). But a fast implementation of a red-black tree wants to store a bunch of stuff in each node, including pointers to its left and right children, parent, and next/previous nodes, which is a lot of storage overhead.
+Since the sequence naturally contains many sequences of sequential numbers, it's much more efficent to store just the endpoints of ranges. A good structure for quickly adding and removing ordered things is a [red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree). But a fast implementation of a red-black tree wants to store a bunch of stuff in each node, including pointers to its left and right children, parent, and next/previous nodes, which is a lot of storage overhead.
 
 One trick to cut the size of the pointers in half is to allocate a large single storage array up front, and use 32-bit indices into it, instead of actual 64-bit pointers. But it's still a lot of overhead. To amortize that cost, each node stores not just one range, but an array of ranges. The size of the array varies with the size of the numbers being stored in the tree, but is kept between 100 and 200. (The reason for not having a constant array size is explained below.)
 
 The basic `range_tree` is templated on the size of the `varnum` numbers in its ranges, and supports several key operations:
 - Adding a range: The new range may connect or overlap one or more ranges within a node, and/or span multiple nodes (which leads to _so many special cases_). If the new range combines with existing ranges then the node may end up with fewer valid ranges than it had before. If a new range needs to be inserted then the tail of the array is shifted over to make room; if the array is full then the last range is moved to a newly inserted node, making room to insert the new range.
 - Querying whether a particular number is present in any of the ranges.
-- Find the closest number lower than N which is used. This is the check for case #1 in the fast computation.
-- Find the closest number lower than N which is _not_ used and is a multiple of 3 away from N. This is the check for case #2.
+- Find the closest number lower than N which is taken. This is the check for case #1 in the fast computation.
+- Find the closest number lower than N which is _not_ taken and is a multiple of 3 away from N. This is the check for case #2.
 - Garbage collection: over time the tree gets cluttered with underutilized nodes, which occur when ranges coalesce or when new nodes containing a single range are inserted. When the ratio of invalid ranges gets too high, the tree repacks all ranges into full nodes, and recycles all extra nodes back into a freelist. It then shuffles the nodes in the underlying storage array so that they are located at sequential addresses, which helps with memory locality and paging (below).
+
+Overall, the base `range_tree` gives highly space-efficient storage for ranges of a specific number size, with reasonable performance; using appropriate choices for array size and garbage collection thresholds, less than 1% of storage is used for anything other than the actual, non-zero data bytes.
 
 ### Variable-sized ranges
 
+The next layer is the `var_range_tree`, which has an array of `range_tree` of each size. In fact, it's advantageous to limit the size of any individual tree (for garbage collection; see paging section below), so I keep one tree for every *bit* size. I set the maximum number size to 2048 bits, so I have 2048 trees of ranges.
 
+All the math in the main algorithm is done using max-sized numbers, which are the inputs to the `var_range_tree` functions. It determines the actual size in bits of the input number and passes the operation on to the appropriate tree. For the search functions (e.g. closest lower taken number), an individual tree may return that its search fell off the lower end of the tree, in which case the same query is made of the next smaller tree. All the `var_range_tree` functions track a bitmap of which trees have been accessed and/or modified, which is periodically output and reset -- this is the source of the "paint-dripping" graphs above.
 
 ### OLD
 
