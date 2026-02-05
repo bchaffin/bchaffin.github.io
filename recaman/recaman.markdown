@@ -11,16 +11,21 @@ The [Recamán sequence](https://en.wikipedia.org/wiki/Recam%C3%A1n%27s_sequence)
 
 I first heard of this sequence in a talk by Neil Sloane in 2006, and I have returned to it many times over the years, through many generations of computing hardware and compilers. Altogether I've probably invested more time and energy in this project than almost any other.
 
-The definition is simple: the first term, a(0), is 0. Then to get the nth term, we subtract n from the previous term, if the result would be non-negative and has not already appeared in the sequence; otherwise, we add n to the previous term. (Duplicate terms are allowed when adding.) So to get the first few terms:
+The definition is simple: the first term, a(0), is 0. Then to get the _n_<sup>th</sup> term, we subtract _n_ from the previous term, if the result would be non-negative and has not already appeared in the sequence; otherwise, we add _n_ to the previous term. (Duplicate terms are allowed when adding.) So to get the first few terms:
 - For a(1), we try subtracting 1 from a(0)=0, but that's negative, so instead we add to get a(1) = 1.
 - For a(2), we try subtracting 2 from a(1)=1, but that's negative, so we add to get a(2) = 3.
 - For a(3), we try subtracting 3 from a(2)=3, but 0 has already appeared at a(0), so we add to get a(3) = 6.
 - For a(4), we try subtracting 4 from a(3)=6, and this time it works: 2 is positive and has not already appeared, so a(4) = 2.
 
+Below are graphs of the initial 10<sup>2</sup> to 10<sup>7</sup> terms, which show a fractal-like overall structure:
+
 <img src="rec-100.png" width="500"> <img src="rec-1000.png" width="500">
 <img src="rec-10000.png" width="500"> <img src="rec-100000.png" width="500">
+<img src="rec-1m.png" width="500"> <img src="rec-10m.png" width="500">
 
-![Recaman sequence 100 terms](rec-100.png) ![Recaman sequence 1000 terms](rec-1000.png) ![Recaman sequence 10000 terms](rec-10000.png) ![Recaman sequence 100000 terms](rec-100000.png)
+One interesting question we can try to approach computationally is: does every non-negative value eventually appear in the sequence? And what are the records where it fills in the smallest missing number? (Spoiler alert: [A064227](https://oeis.org/A064227)
+
+Terms can only be small relative to _n_ when (a(_n_) mod _n_) is small -- the terms are close to (but larger than) a multiple of _n_, so that if we're lucky and don't add twice in a row too much, we might be able to subtract away most of the value of the previous term, leaving only a small remainder. The value of (a(_n_) mod _n_) stays the same or decreases from one term to the next, until it "wraps around" to a value close to _n_. The smallest term seen since the last wraparound is a local minimum, or _landing_. Landings are the terminal points of the downward arcs seen in the graphs above, such as a(403)=92 and a(4971)=426, and are the places where the sequence has a chance to fill in a missing small number.
 
 TBD: graphs, characterization of overall behavior, questions and goal of computation
 
@@ -31,7 +36,7 @@ Computing terms of the sequence one by one is easy, just following the rule abov
 1. The lower range bumps into a number which has already appeared in the sequence, so we can't subtract; then we add twice in a row
 2. The lower range passes over a "hole" farther down which allows us to subtract twice in a row
 
-At the beginning of a ping-pong section, we can look ahead to find the which of these two terminal conditions will happen first and in how many steps, and then we know that all the intervening terms form two contiguous ranges, without having to compute them individually. In practice, the ping-pong sections get exponentially longer as the sequence progresses, so the computation also accelerates.
+At the beginning of a ping-pong section, we can look ahead to find the which of these two terminal conditions will happen first and in how many steps, and then we know that all the intervening terms form two contiguous ranges, without having to compute them individually. In practice, the ping-pong sections get exponentially longer as the sequence progresses, so the computation also accelerates. In the graphs above, each trapezoidal block is generally a ping-pong section which can be computed in a single step of this algorithm.
 
 Detecting condition #1 is relatively easy; we just look for the closest number below the lower range which is already taken. Condition #2 is more complicated, because only every third number is tested. Using the same example as above, a(6)=13; to get a(7) we try 13-7=6, which has already appeared. In this case 6 was the potential "hole" which would have allowed us to subtract twice in a row. Now a(8)=12, and to get a(9) we try 12-9=3; 3 is the potential "hole". So to detect condition #2 we need to find the first lower untaken number which is a multiple of 3 steps away.
 
