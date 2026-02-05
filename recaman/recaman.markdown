@@ -17,12 +17,10 @@ The definition is simple: the first term, a(0), is 0. Then to get the nth term, 
 - For a(3), we try subtracting 3 from a(2)=3, but 0 has already appeared at a(0), so we add to get a(3) = 6.
 - For a(4), we try subtracting 4 from a(3)=6, and this time it works: 2 is positive and has not already appeared, so a(4) = 2.
 
-<img src="rec-100.png" width="375"> <img src="rec-1000.png" width="375">
-<img src="rec-10000.png" width="375"> <img src="rec-100000.png" width="375">
+<img src="rec-100.png" width="500"> <img src="rec-1000.png" width="500">
+<img src="rec-10000.png" width="500"> <img src="rec-100000.png" width="500">
 
-![Recaman sequence 100 terms](rec-100.png) ![Recaman sequence 1000 terms](rec-1000.png)
-![Recaman sequence 10000 terms](rec-10000.png)
-![Recaman sequence 100000 terms](rec-100000.png)
+![Recaman sequence 100 terms](rec-100.png) ![Recaman sequence 1000 terms](rec-1000.png) ![Recaman sequence 10000 terms](rec-10000.png) ![Recaman sequence 100000 terms](rec-100000.png)
 
 TBD: graphs, characterization of overall behavior, questions and goal of computation
 
@@ -116,7 +114,7 @@ As described above, the high-level pattern of the sequence is that the upper (in
 
 ### Storage
 
-For disk storage, I built an array of four 8TB hard drives. To maximize data transfer speed I used the [btrfs filesystem](https://en.wikipedia.org/wiki/Btrfs) to organize them as a RAID-0 array, where data is striped across all the drives, giving 4x the read and write bandwidth of a single drive. I also enabled automatic disk compression, which shrunk the data by about XX% on average. At the end of the computation, the disk held XXXTB of uncompressed data.
+For disk storage, I built an array of four 8TB hard drives. To maximize data transfer speed I used the [btrfs filesystem](https://en.wikipedia.org/wiki/Btrfs) to organize them as a RAID-0 array, where data is striped across all the drives, giving 4x the read and write bandwidth of a single drive. I also enabled automatic disk compression, which shrunk the data by about 26% on average. At the end of the computation, the disk held 36TB of uncompressed data.
 
 For most of the life of this project I just hoped that everything would run for a long time without crashing or losing power, but eventually this proved too difficult and I had to implement checkpointing, where all the in-memory pages are flushed to disk, and all global data is saved away. This is a time-consuming process, so I triggered it manually every few weeks. After creating a checkpoint, I used `btrfs snapshot` to create a clone of the whole storage area; the files are copy-on-write so this costs no disk space until a file is modified.
 
