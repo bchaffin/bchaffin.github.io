@@ -23,7 +23,7 @@ Below are graphs of the initial 10<sup>2</sup> to 10<sup>7</sup> terms, which sh
 <img src="rec-10000.png" width="500"> <img src="rec-100000.png" width="500">
 <img src="rec-1m.png" width="500"> <img src="rec-10m.png" width="500">
 
-One interesting question we can try to approach computationally is: does every non-negative value eventually appear in the sequence? And what are the records where it fills in the smallest missing number? (Spoiler alert: [A064227](https://oeis.org/A064227)
+One interesting question we can try to approach computationally is: does every non-negative value eventually appear in the sequence? What numbers have not yet appeared, and what are the terms where it fills in the smallest missing number? (Spoiler alert: [A064227](https://oeis.org/A064227))
 
 Terms can only be small relative to _n_ when (a(_n_) mod _n_) is small -- the terms are close to (but larger than) a multiple of _n_, so that if we're lucky and don't add twice in a row too much, we might be able to subtract away most of the value of the previous term, leaving only a small remainder. The value of (a(_n_) mod _n_) stays the same or decreases from one term to the next, until it "wraps around" to a value close to _n_. The smallest term seen since the last wraparound is a local minimum, or _landing_. Landings are the terminal points of the downward arcs seen in the graphs above, such as a(403)=92 and a(4971)=426, and are the places where the sequence has a chance to fill in a missing small number.
 
