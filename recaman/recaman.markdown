@@ -19,9 +19,9 @@ The definition is simple: the first term, a(0), is 0. Then to get the _n_<sup>th
 
 Below are graphs of the initial 10<sup>2</sup> to 10<sup>7</sup> terms:
 
-<img src="rec-100.png" width="500"> <img src="rec-1000.png" width="500">
-<img src="rec-10000.png" width="500"> <img src="rec-100000.png" width="500">
-<img src="rec-1m.png" width="500"> <img src="rec-10m.png" width="500">
+<img src="rec-100.png" width="450"> <img src="rec-1000.png" width="450">
+<img src="rec-10000.png" width="450"> <img src="rec-100000.png" width="450">
+<img src="rec-1m.png" width="450"> <img src="rec-10m.png" width="450">
 
 ### Questions
 
