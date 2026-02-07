@@ -5,7 +5,7 @@ date:   2024-02-20
 ---
 
 
-### The Recamán Sequence
+## The Recamán Sequence
 
 The [Recamán sequence](https://en.wikipedia.org/wiki/Recam%C3%A1n%27s_sequence) is a fascinating integer sequence. It is in the [OEIS](https://oeis.org/) as [A005132](https://oeis.org/A005132); in fact its first terms spiral around the outside of the OEIS logo. It features in the Numberphile video [The Slightly Spooky Recamán Sequence](https://www.youtube.com/watch?v=FGC5TdIiT9U). It has inspired some [beautiful artwork](https://oeis.org/A005132/a005132_1.png), and is discussed in many places on the internet.
 
@@ -29,7 +29,7 @@ Some interesting questions we can try to approach computationally are:
 - Does every non-negative value eventually appear in the sequence?
 - What numbers have not yet appeared, and what are the terms where it fills in the smallest missing number? (Spoiler alert: see [A064227](https://oeis.org/A064227).)
 - Where does the sequence reach a new record height (addition steps minus subtraction steps)? ([A064292](https://oeis.org/A064292))
-- What terms set new records for the most addition or subtraction steps in a row? (Not previously in OEIS, now Axxx and Axxx.)
+- What terms set new records for the most addition or subtraction steps in a row?
 
 Terms can only be small relative to _n_ when (a(_n_) mod _n_) is small -- if the terms are close to (but larger than) a multiple of _n_, we might be able to subtract away most of the value of the previous term, leaving only a small remainder. The value of (a(_n_) mod _n_) stays the same or decreases from one term to the next, until it "wraps around" to a value close to _n_ (see [A065052](https://oeis.org/A065052)). The smallest term seen since the last wraparound is a local minimum, or _landing_. Landings are the terminal points of the downward arcs seen in the graphs above, such as a(403)=92 and a(4971)=426, and are the places where the sequence has a chance to fill in a missing small number. The locations and values of these landings have not previously been recorded in the OEIS.
 
@@ -37,12 +37,14 @@ Terms can only be small relative to _n_ when (a(_n_) mod _n_) is small -- if the
 
 I computed the Recamán sequence to over 10<sup>612</sup> terms, over a period of about 14 months on an Intel Skylake-generation system with 256GB of memory and a 30TB disk array. See below for details on the algorithm.
 
-Here is a plot of the first 10<sup>612</sup> terms, with log scale (base 10) on both axes:
+Here is a plot of the first 10<sup>612</sup> terms, with log scale (base 10) on both axes.
 ![log-log plot of first 10^612 terms](rec-loglog-1e612.png)
 
-TBD: graphs, characterization of overall behavior, questions and goal of computation
+Each of the little downward spikes (and many more too small or close together to see) is a landing. There are several near misses, where the sequence gets quite low without filling the bottom-most hole. The lowest it goes after hitting 2406 is a(899989616955022684) = 963744. The most dramatic is around term 10<sup>41<sup>, at a(177900612666336352118510768792480139301821) = 2023155. After that, the lowest it gets is about 10<sup>27</sup>, around term 10<sup>167</sup>. And after 10<sup>612<sup> terms, 852655 remains the smallest missing number.
 
-### Fast computation
+TBD: holes under 2^32, records for consecutive add/sub, landings
+
+## Computation
 
 Computing terms of the sequence one by one is easy, just following the rule above. But we can go faster: in the graphs above we can see that the sequence tends to alternate addition and subtraction, ping-ponging between two ranges of consecutive numbers. For example, terms a(6) - a(17) are: 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, 8, 25; these form a lower range of 13 down to 8, and an upper range of 20 up to 25. In general, this ping-pong pattern will continue until one of two things happens:
 
@@ -132,7 +134,7 @@ As described above, the high-level pattern of the sequence is that the upper (in
 
 ### Storage
 
-For disk storage, I built an array of four 8TB hard drives. To maximize data transfer speed I used the [btrfs filesystem](https://en.wikipedia.org/wiki/Btrfs) to organize them as a RAID-0 array, where data is striped across all the drives, giving 4x the read and write bandwidth of a single drive. I also enabled automatic disk compression, which shrunk the data by about 26% on average. At the end of the computation, the disk held 36TB of uncompressed data.
+For disk storage, I built an array of four 8TB hard drives. To maximize data transfer speed I used the [btrfs filesystem](https://en.wikipedia.org/wiki/Btrfs) to organize them as a RAID-0 array, where data is striped across all the drives, giving 4x the read and write bandwidth of a single drive. I also enabled automatic disk compression, which shrunk the data by about 26% on average. At the end of the computation, the disk held 36TB of uncompressed data. (Although my maximum 2048-bit `varnum` size ended up being the limit which ended the run, not disk space.) 
 
 For most of the life of this project I just hoped that everything would run for a long time without crashing or losing power, but eventually this proved too difficult and I had to implement checkpointing, where all the in-memory pages are flushed to disk, and all global data is saved away. This is a time-consuming process, so I triggered it manually every few weeks. After creating a checkpoint, I used `btrfs snapshot` to create a clone of the whole storage area; the files are copy-on-write so this costs no disk space until a file is modified.
 
