@@ -19,9 +19,9 @@ The definition is simple: the first term, a(0), is 0. Then to get the _n_<sup>th
 
 Below are graphs of the initial 10<sup>2</sup> to 10<sup>7</sup> terms:
 
-<img src="rec-100.png" width="450"> <img src="rec-1000.png" width="450">
-<img src="rec-10000.png" width="450"> <img src="rec-100000.png" width="450">
-<img src="rec-1m.png" width="450"> <img src="rec-10m.png" width="450">
+[<img src="rec-100.png" width="400">](rec-100.png) [<img src="rec-1000.png" width="400">](rec-1000.png)
+[<img src="rec-10000.png" width="400">](rec-10000.png) [<img src="rec-100000.png" width="400">](rec-100000.png)
+[<img src="rec-1m.png" width="400">](rec-1m.png) [<img src="rec-10m.png" width="400">](rec-10m.png)
 
 ![First 100 terms of the Recaman sequence](rec-100.png)
 ![First 1000 terms of the Recaman sequence](rec-1000.png)
@@ -45,7 +45,7 @@ Terms can only be small relative to _n_ when (a(_n_) mod _n_) is small -- if the
 I computed the Recamán sequence to over 10<sup>612</sup> terms, over a period of about 14 months on an Intel Skylake-generation system with 256GB of memory and a 30TB disk array. See below for details on the algorithm.
 
 Here is a plot of the first 10<sup>612</sup> terms, with log scale (base 10) on both axes.
-![log-log plot of first 10^612 terms](rec-loglog-1e612.png)
+[![log-log plot of first 10^612 terms](rec-loglog-1e612.png)](rec-loglog-1e612.png)
 
 Each of the little downward spikes (and many more too small or close together to see) is a landing. There are several near misses, where the sequence gets quite low without filling the bottom-most hole. The lowest it goes after hitting 2406 is a(899989616955022684) = 963744. The most dramatic is around term 10<sup>41</sup>, at a(177900612666336352118510768792480139301821) = 2023155. After that, the lowest it gets is about 10<sup>27</sup>, around term 10<sup>167</sup>. And after 10<sup>612</sup> terms, 852655 remains the smallest missing number.
 
