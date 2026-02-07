@@ -40,9 +40,13 @@ I computed the Recamán sequence to over 10<sup>612</sup> terms, over a period o
 Here is a plot of the first 10<sup>612</sup> terms, with log scale (base 10) on both axes.
 ![log-log plot of first 10^612 terms](rec-loglog-1e612.png)
 
-Each of the little downward spikes (and many more too small or close together to see) is a landing. There are several near misses, where the sequence gets quite low without filling the bottom-most hole. The lowest it goes after hitting 2406 is a(899989616955022684) = 963744. The most dramatic is around term 10<sup>41<sup>, at a(177900612666336352118510768792480139301821) = 2023155. After that, the lowest it gets is about 10<sup>27</sup>, around term 10<sup>167</sup>. And after 10<sup>612<sup> terms, 852655 remains the smallest missing number.
+Each of the little downward spikes (and many more too small or close together to see) is a landing. There are several near misses, where the sequence gets quite low without filling the bottom-most hole. The lowest it goes after hitting 2406 is a(899989616955022684) = 963744. The most dramatic is around term 10<sup>41</sup>, at a(177900612666336352118510768792480139301821) = 2023155. After that, the lowest it gets is about 10<sup>27</sup>, around term 10<sup>167</sup>. And after 10<sup>612</sup> terms, 852655 remains the smallest missing number.
 
-TBD: holes under 2^32, records for consecutive add/sub, landings
+Full results:
+- [All landings](rec-landings-1e612.txt) up to 10<sup>612</sup> (see new sequences Axxx and Axxx)
+- [All holes](rec-holes-2_32.txt) under 2<sup>32</sup>
+- Terms which set or tie a record number of [addition steps](rec-most-adds-1e612.txt) or [subtraction steps](rec-most-subs-1e612.txt) (see new sequences Axxx and Axxx)
+- Terms with [maximum height](rec-max-height-1e612.txt) (see [A064292](https://oeis.org/A064292) and [A064290](https://oeis.org/A064290))
 
 ## Computation
 
