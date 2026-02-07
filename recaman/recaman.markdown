@@ -29,14 +29,16 @@ Some interesting questions we can try to approach computationally are:
 - Does every non-negative value eventually appear in the sequence?
 - What numbers have not yet appeared, and what are the terms where it fills in the smallest missing number? (Spoiler alert: see [A064227](https://oeis.org/A064227).)
 - Where does the sequence reach a new record height (addition steps minus subtraction steps)? ([A064292](https://oeis.org/A064292))
-- What terms set new records for the most addition or subtraction steps in a row?
+- What terms set new records for the most addition or subtraction steps in a row? (Not previously in OEIS, now Axxx and Axxx.)
 
-Terms can only be small relative to _n_ when (a(_n_) mod _n_) is small -- the terms are close to (but larger than) a multiple of _n_, so that if we're lucky and don't add twice in a row too much, we might be able to subtract away most of the value of the previous term, leaving only a small remainder. The value of (a(_n_) mod _n_) stays the same or decreases from one term to the next, until it "wraps around" to a value close to _n_ (see [A065052](https://oeis.org/A065052)). The smallest term seen since the last wraparound is a local minimum, or _landing_. Landings are the terminal points of the downward arcs seen in the graphs above, such as a(403)=92 and a(4971)=426, and are the places where the sequence has a chance to fill in a missing small number. The locations and values of these landings have not previously been recorded in the OEIS.
+Terms can only be small relative to _n_ when (a(_n_) mod _n_) is small -- if the terms are close to (but larger than) a multiple of _n_, we might be able to subtract away most of the value of the previous term, leaving only a small remainder. The value of (a(_n_) mod _n_) stays the same or decreases from one term to the next, until it "wraps around" to a value close to _n_ (see [A065052](https://oeis.org/A065052)). The smallest term seen since the last wraparound is a local minimum, or _landing_. Landings are the terminal points of the downward arcs seen in the graphs above, such as a(403)=92 and a(4971)=426, and are the places where the sequence has a chance to fill in a missing small number. The locations and values of these landings have not previously been recorded in the OEIS.
 
 ### Results
 
 I computed the Recamán sequence to over 10<sup>612</sup> terms, over a period of about 14 months on an Intel Skylake-generation system with 256GB of memory and a 30TB disk array. See below for details on the algorithm.
 
+Here is a plot of the first 10<sup>612</sup> terms, with log scale (base 10) on both axes:
+![log-log plot of first 10^612 terms](rec-loglog-1e612.png)
 
 TBD: graphs, characterization of overall behavior, questions and goal of computation
 
