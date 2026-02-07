@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "The Recamán Sequence"
-date:   2024-02-20
+date:   2026-02-07
 ---
 
 
@@ -22,6 +22,13 @@ Below are graphs of the initial 10<sup>2</sup> to 10<sup>7</sup> terms:
 <img src="rec-100.png" width="450"> <img src="rec-1000.png" width="450">
 <img src="rec-10000.png" width="450"> <img src="rec-100000.png" width="450">
 <img src="rec-1m.png" width="450"> <img src="rec-10m.png" width="450">
+
+![First 100 terms of the Recaman sequence](rec-100.png)
+![First 1000 terms of the Recaman sequence](rec-1000.png)
+![First 10,000 terms of the Recaman sequence](rec-10000.png)
+![First 100,000 terms of the Recaman sequence](rec-100000.png)
+![First 1,000,000 terms of the Recaman sequence](rec-1m.png)
+![First 10,000,000 terms of the Recaman sequence](rec-10m.png)
 
 ### Questions
 
