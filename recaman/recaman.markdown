@@ -19,16 +19,9 @@ The definition is simple: the first term, a(0), is 0. Then to get the _n_<sup>th
 
 Below are graphs of the initial 10<sup>2</sup> to 10<sup>7</sup> terms:
 
-[<img src="rec-100.png" width="400">](rec-100.png) [<img src="rec-1000.png" width="400">](rec-1000.png)
-[<img src="rec-10000.png" width="400">](rec-10000.png) [<img src="rec-100000.png" width="400">](rec-100000.png)
-[<img src="rec-1m.png" width="400">](rec-1m.png) [<img src="rec-10m.png" width="400">](rec-10m.png)
-
-![First 100 terms of the Recaman sequence](rec-100.png)
-![First 1000 terms of the Recaman sequence](rec-1000.png)
-![First 10,000 terms of the Recaman sequence](rec-10000.png)
-![First 100,000 terms of the Recaman sequence](rec-100000.png)
-![First 1,000,000 terms of the Recaman sequence](rec-1m.png)
-![First 10,000,000 terms of the Recaman sequence](rec-10m.png)
+[<img src="rec-100.png" width="350">](rec-100.png) [<img src="rec-1000.png" width="350">](rec-1000.png)
+[<img src="rec-10000.png" width="350">](rec-10000.png) [<img src="rec-100000.png" width="350">](rec-100000.png)
+[<img src="rec-1m.png" width="350">](rec-1m.png) [<img src="rec-10m.png" width="350">](rec-10m.png)
 
 ### Questions
 
