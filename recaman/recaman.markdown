@@ -17,15 +17,26 @@ The definition is simple: the first term, a(0), is 0. Then to get the _n_<sup>th
 - For a(3), we try subtracting 3 from a(2)=3, but 0 has already appeared at a(0), so we add to get a(3) = 6.
 - For a(4), we try subtracting 4 from a(3)=6, and this time it works: 2 is positive and has not already appeared, so a(4) = 2.
 
-Below are graphs of the initial 10<sup>2</sup> to 10<sup>7</sup> terms, which show a fractal-like overall structure:
+Below are graphs of the initial 10<sup>2</sup> to 10<sup>7</sup> terms:
 
 <img src="rec-100.png" width="500"> <img src="rec-1000.png" width="500">
 <img src="rec-10000.png" width="500"> <img src="rec-100000.png" width="500">
 <img src="rec-1m.png" width="500"> <img src="rec-10m.png" width="500">
 
-Some interesting questions we can try to approach computationally are: does every non-negative value eventually appear in the sequence? What numbers have not yet appeared, and what are the terms where it fills in the smallest missing number? (Spoiler alert: see [A064227](https://oeis.org/A064227))
+### Questions
 
-Terms can only be small relative to _n_ when (a(_n_) mod _n_) is small -- the terms are close to (but larger than) a multiple of _n_, so that if we're lucky and don't add twice in a row too much, we might be able to subtract away most of the value of the previous term, leaving only a small remainder. The value of (a(_n_) mod _n_) stays the same or decreases from one term to the next, until it "wraps around" to a value close to _n_. The smallest term seen since the last wraparound is a local minimum, or _landing_. Landings are the terminal points of the downward arcs seen in the graphs above, such as a(403)=92 and a(4971)=426, and are the places where the sequence has a chance to fill in a missing small number.
+Some interesting questions we can try to approach computationally are: 
+- Does every non-negative value eventually appear in the sequence?
+- What numbers have not yet appeared, and what are the terms where it fills in the smallest missing number? (Spoiler alert: see [A064227](https://oeis.org/A064227).)
+- Where does the sequence reach a new record height (addition steps minus subtraction steps)? ([A064292](https://oeis.org/A064292))
+- What terms set new records for the most addition or subtraction steps in a row?
+
+Terms can only be small relative to _n_ when (a(_n_) mod _n_) is small -- the terms are close to (but larger than) a multiple of _n_, so that if we're lucky and don't add twice in a row too much, we might be able to subtract away most of the value of the previous term, leaving only a small remainder. The value of (a(_n_) mod _n_) stays the same or decreases from one term to the next, until it "wraps around" to a value close to _n_ (see [A065052](https://oeis.org/A065052)). The smallest term seen since the last wraparound is a local minimum, or _landing_. Landings are the terminal points of the downward arcs seen in the graphs above, such as a(403)=92 and a(4971)=426, and are the places where the sequence has a chance to fill in a missing small number. The locations and values of these landings have not previously been recorded in the OEIS.
+
+### Results
+
+I computed the Recamán sequence to over 10<sup>612</sup> terms, over a period of about 14 months on an Intel Skylake-generation system with 256GB of memory and a 30TB disk array. See below for details on the algorithm.
+
 
 TBD: graphs, characterization of overall behavior, questions and goal of computation
 
