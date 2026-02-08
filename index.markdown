@@ -33,6 +33,7 @@ hear about it! You can reach me at chaffin (at) gmail (dot) com.
 The [Online Encylopedia of Integer Sequences](http://oeis.org) is an
 endless source of fun projects.
 
+- [Recamán sequence](recaman/recaman.html) ([A005132](https://oeis.org/A005132))
 - [Van Eck's sequence](vaneck/vaneck.html) ([A181391](https://oeis.org/A181391))
 - [Multiplicative persistence](persistence/persistence.html) ([A003001](https://oeis.org/A003001))
 - [Zeros in powers of 2](twozeros/twozeros.html) ([A006889](https://oeis.org/A006889))
@@ -46,7 +47,6 @@ endless source of fun projects.
 
 ## Coming eventually
 
-- [The Recaman Sequence](https://oeis.org/A005132)
 - [Paterson's Worms](https://en.wikipedia.org/wiki/Paterson%27s_worms)
 - [Gathering for Gardner](https://www.gathering4gardner.org/) exchange gifts
 - [Superpermutations](https://www.gregegan.net/SCIENCE/Superpermutations/Superpermutations.html)
