@@ -5,7 +5,7 @@ date:   2026-02-07
 ---
 
 
-## The Recamán Sequence
+## Computing the Recamán Sequence
 
 The [Recamán sequence](https://en.wikipedia.org/wiki/Recam%C3%A1n%27s_sequence) is a fascinating integer sequence. It is in the [OEIS](https://oeis.org/) as [A005132](https://oeis.org/A005132); in fact its first terms spiral around the outside of the OEIS logo. It features in the Numberphile video [The Slightly Spooky Recamán Sequence](https://www.youtube.com/watch?v=FGC5TdIiT9U). It has inspired some [beautiful artwork](https://oeis.org/A005132/a005132_1.png), and is discussed in many places on the internet.
 
