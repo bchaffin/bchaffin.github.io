@@ -1,4 +1,7 @@
+landing: r[1] = 1
+landing: r[2] = 3
 landing: r[4] = 2
+landing: r[10] = 11
 landing: r[16] = 8
 landing: r[31] = 14
 landing: r[64] = 26
