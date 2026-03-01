@@ -101,7 +101,7 @@ inline varnum<b>& operator += (const varnum<b> &x)
 }
 ```
 
-Since `b` is known at compile time, this produces the optimal sequence of add-carry instructions: as many 64-bit add-carrys as needed, and maybe 4/2/1-byte add-carrys to finish off the bytes at the top, if needed depending on the size of the number.
+Since `b` is known at compile time, this produces the optimal sequence of add-carry instructions: as many 64-bit add-carrys as needed, and maybe 32/16/8-bit add-carrys to finish off the bytes at the top, if needed depending on the size of the number.
 
 Similar routines implement other basic operations like assignment, arithmetic, and comparison, with special cases for some common things like comparison to zero and comparison to x +/- 1. For div and mod by 3, I just convert to a GMP integer and use the library routines. 
 
@@ -132,7 +132,7 @@ Now we have everything we need to compute the sequence quickly and store all the
 
 Within the `range_tree`, the node storage is divided into 64MB pages -- the page size is chosen to balance storage and disk I/O granularity with the overhead of tracking data needed for each page. Every reference to a node first figures out which page the node is in; the number of nodes per page is always a power of 2 so that this can be done quickly with a shift. To avoid wasting space at the end of each page, the number of ranges per tree node is chosen differently for each tree size to ensure that a power of 2 nodes fits as tightly as possible in a page. (This has to be done with compile-time macros because the array size is a template parameter to the node, to avoid dynamic allocation of each range array.)
 
-After computing the page number, a node reference checks whether the page is present in memory. If not, it chooses a victim page to swap out to disk, and brings in the needed page. Obviously the page replacement policy will matter a lot here, and the details of paging and its interaction with garbage collection needed many rounds of tuning to avoid thrashing. In particular, it's a really bad idea to garbage collect a tree which is larger than RAM, as the reshuffling of nodes causes nearly endless swapping back and forth (this is why I use separate trees for each bit sinze, instead of byte size).
+After computing the page number, a node reference checks whether the page is present in memory. If not, it chooses a victim page to swap out to disk, and brings in the needed page. Obviously the page replacement policy will matter a lot here, and the details of paging and its interaction with garbage collection needed many rounds of tuning to avoid thrashing. In particular, it's a really bad idea to garbage collect a tree which is larger than RAM, as the reshuffling of nodes causes nearly endless swapping back and forth (this is why I use separate trees for each bit size, instead of byte size).
 
 As described above, the high-level pattern of the sequence is that the upper (increasing) ranges continue to increase steadily, while the lower (decreasing) ranges decrease to some local minimum and then jump back up. This means that standard replacement policies like LRU (least recently used) don't work well, because the lower ranges will walk through lots of data which is only briefly used. Instead, I keep a small number of recently used pages, after that prefer those which store larger numbers. This means that when a downward arc completes, most of memory still contains data from the uppermost portions of the sequence, which will be useful.
 
