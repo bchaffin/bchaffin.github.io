@@ -44,6 +44,7 @@ endless source of fun projects.
 
 - [Coin-sliding puzzles](coin-sliding/coin-sliding.html) by [Erik Demaine](https://erikdemaine.org/)
 - [Magic square of squares](magic-squares/magic-squares.html)
+- [Mobile paths in the game of Life](mobile-paths/mobile-paths.html)
 
 ## Coming eventually
 
