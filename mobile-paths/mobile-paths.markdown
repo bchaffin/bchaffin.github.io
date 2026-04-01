@@ -5,7 +5,7 @@ date:   2026-04-01
 ---
 
 
-## The game of Life
+### The game of Life
 
 The [game of LIFE](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) is a famous cellular automaton with fascinating behavior -- famous enough that a Google search for "game of life" even shows an animation of it in the background of the search results! There are lots of good resources for learning about it, which I won't attempt to replicate here. You can play a simple version at [playgameoflife.com](https://playgameoflife.com/), or simulate massive grids with [Golly](https://golly.sourceforge.io/webapp/golly.html).
 
