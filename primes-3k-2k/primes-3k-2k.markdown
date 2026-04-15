@@ -39,9 +39,9 @@ This modular exponentiation can take quite a while (since the exponent is in the
 
 ### Results
 
-With these techniques, I was able to test all _k_ up to 4,000,000. Unfortunately, all of them were found to be composite. Complete results are in these files:
+With these techniques, I was able to test all _k_ up to 4,000,000; at the top end of that range 3<sup>k</sup>-2<sup>k</sup> has about 1.9 million digits. Unfortunately, all of them were found to be composite. Complete results are in these files:
 - [1059503 to 2000000](3k2k-results-1m2m.txt)
 - [2000000 to 3000000](3k2k-results-2m3m.txt)
-- 3000000 to 4000000 (in progress)
+- [3000000 to 4000000](3k2k-results-3m4m.txt)
 
 A random odd number _R_ has roughly `2/ln(R)` chance of being prime. Assuming that 3<sup>k</sup>-2<sup>k</sup> (for prime _k_) has a similar likelihood of being prime -- which may not be a valid assumption! -- then there is only about a 2.6% chance of finding a prime for _k_ between 4,000,000 and 5,000,000.
