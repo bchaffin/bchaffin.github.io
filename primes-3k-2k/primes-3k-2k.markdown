@@ -44,4 +44,4 @@ With these techniques, I was able to test all _k_ up to 4,000,000. Unfortunately
 - [2000000 to 3000000](3k2k-results-2m3m.txt)
 - 3000000 to 4000000 (in progress)
 
-A random odd number _R_ has roughly `2/ln(R)` chance of being prime. Assuming that 3<sup>k</sup>-2<sup>k</sup> (for prime _k) has a similar likelihood of being prime -- which may not be a valid assumption! -- then there is only about a 2.6% chance of finding a prime for k between 4,000,000 and 5,000,000.
+A random odd number _R_ has roughly `2/ln(R)` chance of being prime. Assuming that 3<sup>k</sup>-2<sup>k</sup> (for prime _k_) has a similar likelihood of being prime -- which may not be a valid assumption! -- then there is only about a 2.6% chance of finding a prime for k between 4,000,000 and 5,000,000.
