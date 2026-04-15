@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Primes of the form 3<sup>k</sup> - 2<sup>k</sup>"
+title:  "Primes of the form 3^k - 2^k"
 date:   2026-04-14
 ---
 
