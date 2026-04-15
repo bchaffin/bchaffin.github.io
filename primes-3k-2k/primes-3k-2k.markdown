@@ -7,13 +7,13 @@ date:   2026-04-14
 
 ### The sequence
 
-The [OEIS](https://oeis.org) sequence [A057468](https://oeis.org/A057468) gives the values of *k* for which 3<sup>k</sup>-2<sup>k</sup> is prime (or probably prime, for larger numbers). The largest known term is 1059503, meaning 3<sup>1059503</sup> - 2<sup>1059503</sup>, which is a number with 505512 digits, is probably prime. Finding the next term seemed like an interesting challenge.
+The [OEIS](https://oeis.org) sequence [A057468](https://oeis.org/A057468) gives the values of _k_ for which 3<sup>k</sup>-2<sup>k</sup> is prime (or probably prime, for larger numbers). The largest known term is 1059503, meaning 3<sup>1059503</sup> - 2<sup>1059503</sup>, which is a number with 505512 digits, is probably prime. Finding the next term seemed like an interesting challenge.
 
 ### First steps
 
-As noted in [A001047](https://oeis.org/A001047), 3<sup>k</sup>-2<sup>k</sup> can only be prime if *k* is prime, which immediately reduces the number of exponents we have to check to just the primes. 
+As noted in [A001047](https://oeis.org/A001047), 3<sup>k</sup>-2<sup>k</sup> can only be prime if _k_ is prime, which immediately reduces the number of exponents we have to check to just the primes. 
 
-The first step is trial division to look for small divisors. After testing many numbers for divisibility by a long list of small primes, I noticed an interesting pattern: **if 3<sup>k</sup>-2<sup>k</sup> is composite, all factors appear to be of the form 2n*k+1, for some n >= 1**. I think this derives from the fact (also noted in A001047) that p divides 3<sup>p</sup>-2<sup>p</sup>-1 if _p_ is prime. But since trial division is in some sense just an optional optimization, I just used this observation without trying to prove it.
+The first step is trial division to look for small divisors. After testing many numbers for divisibility by a long list of small primes, I noticed an interesting pattern: **if 3<sup>k</sup>-2<sup>k</sup> is composite, all factors appear to be of the form 2n*k+1, for some _n_ >= 1**. I think this derives from the fact (also noted in A001047) that _p_ divides 3<sup>_p_</sup>-2<sup>_p_</sup>-1 if _p_ is prime. But since trial division is in some sense just an optional optimization, I just used this observation without trying to prove it.
 
 So instead of doing trial division by all small primes, we only need to look at even multiples of *k* plus 1, which allows us to do trial division up to a much larger threshold. Of course not all 2n\*k+1 are prime, and we really only want to test divisibility by primes. But doing a full primality test on a 64-bit number (with GMP's `mpz_probab_prime_p()`) is actually slower than just checking whether it divides 3<sup>k</sup>-2<sup>k</sup>. Instead we can filter out most non-prime candidates by doing a little trial division on our trial division: for each 2n\*k+1 we check whether it is divisible by a list of small primes, and if not then we check whether it divides 3<sup>k</sup>-2<sup>k</sup>.
 
@@ -44,4 +44,4 @@ With these techniques, I was able to test all _k_ up to 4,000,000. Unfortunately
 - [2000000 to 3000000](3k2k-results-2m3m.txt)
 - 3000000 to 4000000 (in progress)
 
-A random odd number _R_ has roughly `2/ln(R)` chance of being prime. Assuming that 3<sup>k</sup>-2<sup>k</sup> (for prime _k_) has a similar likelihood of being prime -- which may not be a valid assumption! -- then there is only about a 2.6% chance of finding a prime for k between 4,000,000 and 5,000,000.
+A random odd number _R_ has roughly `2/ln(R)` chance of being prime. Assuming that 3<sup>k</sup>-2<sup>k</sup> (for prime _k_) has a similar likelihood of being prime -- which may not be a valid assumption! -- then there is only about a 2.6% chance of finding a prime for _k_ between 4,000,000 and 5,000,000.
