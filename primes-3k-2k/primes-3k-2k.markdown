@@ -7,13 +7,13 @@ date:   2026-04-14
 
 ### The sequence
 
-The [OEIS](https://oeis.org) sequence [A057468](https://oeis.org/A057468) gives the values of $k$ for which $3^k-2^k$ is prime (or probably prime, for larger numbers). The largest known term is 1059503, meaning $3^{1059503} - 2^{1059503}$, which is a number with 505512 digits, is probably prime. Finding the next term seemed like an interesting challenge.
+The [OEIS](https://oeis.org) sequence [A057468](https://oeis.org/A057468) gives the values of $k$ for which $3^k-2^k$ is prime (or probably prime, for larger numbers). The largest known term was 1059503, meaning $3^{1059503} - 2^{1059503}$, which is a number with 505512 digits, is probably prime. Finding the next term seemed like an interesting challenge.
 
 ### First steps
 
 As noted in [A001047](https://oeis.org/A001047), $3^k-2^k$ can only be prime if $k$ is prime, which immediately reduces the number of exponents we have to check to just the primes. 
 
-The first step is trial division to look for small divisors. After testing many numbers for divisibility by a long list of small primes, I noticed an interesting pattern: **if $3^k-2^k$ is composite, all factors appear to be of the form $2n*k+1$, for some $n$ >= 1**. I think this derives from the fact (also noted in A001047) that $p$ divides $3^p-2^p-1$ if $p$ is prime. But since trial division is in some sense just an optional optimization, I just used this observation without trying to prove it.
+The first step is trial division to look for small divisors. After testing many numbers for divisibility by a long list of small primes, I noticed an interesting pattern: **if $3^k-2^k$ is composite, all factors appear to be of the form $2n*k+1$, for some $n$ >= 1**. I think this derives from the fact (also noted in A001047) that $p$ divides $3^p-2^p-1$ if $p$ is prime. But since trial division is in some sense just an optional optimization, I just made use of this observation without trying to prove it.
 
 So instead of doing trial division by all small primes, we only need to look at even multiples of $k$ plus 1, which allows us to do trial division up to a much larger threshold. Of course not all $2n\*k+1$ are prime, and we really only want to test divisibility by primes. But doing a full primality test on a 64-bit number (with GMP's `mpz_probab_prime_p()`) is actually slower than just checking whether it divides $3^k-2^k$. Instead we can filter out most non-prime candidates by doing a little trial division on our trial division: for each $2n\*k+1$ we check whether it is divisible by a list of small primes, and if not then we check whether it divides $3^k-2^k$.
 
@@ -25,7 +25,7 @@ The mini-trial division led me to this nice trick for divisibility of unsigned 6
         // x % modulus == 0
 ```
 
-To check whether $m$ divides $3^k-2^k$, it was faster to compute $3^k$ mod $m$ and $2^k$ mod $m$ (using `mpz_powm()`), and check whether they are equal.
+To check whether $m$ divides $3^k-2^k$, it was faster to compute ($3^k$ mod $m$) and ($2^k$ mod $m$) using `mpz_powm()`, and check whether they are equal.
 
 ### The Fermat test
 
@@ -39,13 +39,13 @@ This modular exponentiation can take quite a while (since the exponent is in the
 
 ### Results
 
-With these techniques, I was able to test all $k$ up to 4,000,000; at the top end of that range $3^k-2^k$ has about 1.9 million digits. The chances of success didn't seem all that high; a random odd number $R$ has roughly $2/ln(R)$ chance of being prime, and assuming that $3^k-2^k$ (for prime $k$) has a similar likelihood of being prime -- which may not be a valid assumption! -- then there is only about a 15% chance of finding a prime for $k$ between 1,059,503 and 4,000,000. And in the final and most computationally expensive slice from 3,000,000 to 4,000,000, the chances were only about 3.4%. But, to my surprise, that last range yielded not one but two positive results:
+With these techniques, I was able to test all $k$ up to 4,000,000; at the top end of that range $3^k-2^k$ has about 1.9 million digits. The chances of success didn't seem all that high; a random odd number $R$ has roughly $2/ln(R)$ chance of being prime, and assuming that $3^k-2^k$ (when $k$ is prime) has a similar likelihood of being prime -- which may not be a valid assumption! -- then there is only about a 15% chance of finding a prime for $k$ between 1,059,503 and 4,000,000. And in the final and most computationally expensive slice from 3,000,000 to 4,000,000, the chances were only about 3.4%. But, to my surprise, that last range yielded not one but two positive results:
 
 $\large 3^{3227201} - 2^{3227201}$ is a probable prime with 1539767 digits
 
 $\large 3^{3745897} - 2^{3745897}$ is a probable prime with 1787248 digits
 
-Both of these passed the [Baille-PSW probable prime test](), as implemented by FLINT's `fmpz_is_probabprime_BPSW()` function. Running this test took about 14 CPU-days for 3227201 and XX CPU-days for 3745897; wall-clock time was less than 1/6th of that thanks to FLINT's multi-threading.
+Both of these passed the [Baille-PSW probable prime test](), as implemented by FLINT's `fmpz_is_probabprime_BPSW()` function. Running this test took about 14 CPU-days for 3227201 and 18 CPU-days for 3745897; wall-clock time was less than 1/6th of that thanks to FLINT's multi-threading.
 
 Complete results are in these files:
 - [1059503 to 2000000](3k2k-results-1m2m.txt)
