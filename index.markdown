@@ -39,6 +39,7 @@ endless source of fun projects.
 - [Zeros in powers of 2](twozeros/twozeros.html) ([A006889](https://oeis.org/A006889))
 - [Matchstick squares](matchsticks/matchsticks.html) ([A294249](https://oeis.org/A294249))
 - [Repunit primes](repunit-primes/repunit-primes.html) ([A004023](https://oeis.org/A004023))
+- [Primes of the form 3<sup>k</sup> - 2<sup>k</sup>](primes-3k-2k/primes-3k-2k.html) ([A057468](https://oeis.org/A057468))
 
 ## Other games & puzzles
 
