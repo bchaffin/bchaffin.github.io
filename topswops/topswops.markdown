@@ -22,8 +22,9 @@ The number of steps in the game for a given deck is the _length_ of the deck. Th
 
 Knuth gives several algorithms for finding a longest Topswops deck in Volume 4, section 7.2.1.2, solution to exercise 108. The last one, which he refers to as the "better" algorithm, is a forward search which fills in the value of cards only when it becomes necessary. We start with a deck of blank cards; then we choose a number for the topmost card and make topswops moves until the top card is again blank. By trying each value not already used for blank cards, we can recursively search all permutations while simultaneously making the topswop moves, so that we don't have to repeat the same initial moves for similar decks. And Knuth has a clever trick for keeping track of where in the initial deck each card started, so that when we choose a value for the top card we know which original card we're choosing: we label the cards in the initial deck with the negative of their position, so the starting deck is -1, -2, -3, etc. Then a blank card is anything negative, and when we choose a value for it we also keep track of which card we assigned in a separate initial deck.
 
-We can prune the search in a few ways, to avoid considering all _N_! decks:
+We can prune the search in a few ways, to avoid considering all _N_! decks. The first two pruning strategies are straightforward:
 
 - Never choose 1 as the top card until all other values have been used. Choosing 1 ends the game, so if there is any other choice available then obviously it will result in a longer deck.
-- A longest deck must be a _derangement_; that is, it must not have any cards in their "home" position, i.e. card _M_ in the _M_th position. If it did, we could do a backward move by swapping the top _M_ cards, giving a deck whose length is 1 greater than the current deck.
-- 
+- A longest deck must be a _derangement_; that is, it must not have any cards in their "home" position, i.e. card _M_ in the Mth position. If it did, we could do a backward move by flipping the top _M_ cards, giving a deck whose length is 1 greater than the current deck.
+
+The third pruning strategy gets more involved. Say we are searching for the best 10-card deck. At some point, maybe card 10 ends up in the last position. Now it can never move again, and effectively we continue the game with a 9-card deck. But if we already know the maximum length of a 9-card deck, then we can 
