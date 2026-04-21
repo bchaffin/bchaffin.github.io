@@ -40,3 +40,5 @@ But we can do even better than that. Consider the 10-card search again: with the
 3 4 10 8 2 7 9 5 1 6
 ```
 After 2 moves, no card is in its home position, so no more backward moves are possible. Thus there is a unique 10-card deck, with length 32, which produces the maximum-length 9-card deck. Having done this tiny bit of work, and once we know that _L(10)_ > 32, we can tighten our bound by 1: for a maximum-length 10-card deck, once 10 is in the last position there can be at most _L(9)_-1=29 moves remaining.
+
+We can extend this method: if during the size-9 search we do some extra work (less pruning) and look for decks which are one less than the maximum length, we find that there is a single length-29 deck (`6 1 5 9 2 7 8 3 4`), which can also only go backward 2 steps when we append a 10. So we can tighten the bound for the size-10 search to _L(9)_-2=28.
