@@ -22,13 +22,6 @@ The number of steps in the game for a given deck is the _length_ of the deck. Th
 
 Knuth gives several algorithms for finding a longest Topswops deck in Volume 4, section 7.2.1.2, solution to exercise 108. The last one, which he refers to as the "better" algorithm, is a forward search which fills in the value of cards only when it becomes necessary. We start with a deck of blank cards; then we choose a number for the topmost card and make topswops moves until another blank card is on top. By trying each value not already used for blank cards, we can recursively search all permutations while simultaneously making the topswop moves, so that we don't have to repeat the same initial moves for similar decks. And Knuth has a clever trick for keeping track of where in the initial deck each card started, so that when we choose a value for the top card we know which original card we're choosing: we label the cards in the initial deck with the negative of their position, so the starting deck is -1, -2, -3, etc. Then a blank card is anything negative, and when we choose a value for it we also keep track of which card we assigned in a separate initial deck.
 
-### Faster code
-
-We should really try to reduce the size of the search before optimizing the code, but let's get this simpler part out of the way. We can play a few tricks to streamline the code, taking advantage of the fact that we don't expect to be dealing with decks larger than 21 cards:
-- Use a bit vector to track which cards have already been used. Then we can find the lowest unused card (on most CPUs) with a bit-scanning instruction like that used by `__builtin_ctz()`, and clear the lowest set bit with `x &= (x-1)`.
-- If we select the _N_ as the value for the top card, then we know that in one move we will have _N_ in the last position, and we can perform our pruning check right away, before playing out all the subsequent moves.
-- The simplest code to perform a top-swapping move is just a loop which swaps cards from the outsides to the middle. But this is terrible for the branch predictor because the loop count is totally unpredictable. Simply creating a big ugly case statement with 21 copies of the same loop gave a 15% performance boost, and cut mispredictions nearly in half. (Which I don't totally understand, because that creates a branch table, which should have an unpredictable indirect branch to index into it...) We can get another 5-10% by using bespoke combinations of `__builtin_bswap` for each size.
-
 ### Pruning the search
 
 We can prune the search in a few ways, to avoid considering all _N_! decks. The first two pruning strategies are straightforward:
@@ -52,10 +45,29 @@ After 2 moves, no card is in its home position, so no more backward moves are po
 
 We can extend this method: during the size-9 search, we can do some extra work and look for decks with length 29 (one less than _L(9)_), and do the same backward search on those; if they also cannot achieve a new 10-card best, then we can reduce our bound by 1 again. But there's a pitfall here: our search wants to take advantage of the second pruning technique above and only look for derangements. This works when looking for maximum-length decks, but not when we also want to look for shorter decks. For example, there is exactly one length-29 9-card deck that our search will not find: the result of starting with the optimal length-30 deck and making one move, to get `2 7 9 5 1 6 8 3 4`.
 
-In general, we can generate all size-N decks up to some depth _D_ (meaning of length at least _L(N)_ - _D_) by:
+In general, we can generate all size-_N_ decks up to some depth _D_ (meaning of length at least _L(N)_ - _D_) by:
 1) reducing our pruning threshold by _D_, and
-2) taking each deck with length _L_ > _D_ and making _L_ - _D_ forward moves.
-Then on each of these decks we can perform a backward search to find the longest size-N+1 deck which could produce it.
+2) taking each deck with length _L_ > (_L(N) - D_) and making _L_ - (_L(N) - D_) forward moves.
+
+Then on each of these decks we can perform a backward search to find the longest size-(_N_+1) deck which could produce it. Assuming those backward searches don't find anything which matches the already-known lower bound for _L(N+1)_, then when doing the search for size _N_+1 we can use _L(N) - D_ as the bound for our pruning. Since the execution time is proportional to at least _N_! (and maybe more, because each deck takes more moves), it's worth spending a lot more effort at one size to save on the next.
+
+We can find the largest useful depth by taking the best-known deck for size _N_+1 and running it forward until _N_+1 is in the last place. For example, when playing the longest size-10 deck, 10 ends up in last place after 18 moves. The remaining 9 cards take 20 moves to complete. Since _L(9)_=30, the maximum useful depth for the size-9 search is 30-20 = 10; any further than that will not allow us to improve the pruning for size 10.
+
+### A few tricks
+
+This search is still going to take a long time, so we can tune the code a bit, taking advantage of the fact that we don't expect to be dealing with decks larger than about 21 cards:
+- Use a bit vector to track which cards have already been used. Then we can find the lowest unused card (on most CPUs) with a bit-scanning instruction like that used by `__builtin_ctz()`, and clear the lowest set bit with `x &= (x-1)`.
+- If we select the _N_ as the value for the top card, then we know that in one move we will have _N_ in the last position, and we can perform our pruning check right away, before playing out all the subsequent moves.
+- The simplest code to perform a top-swapping move is just a loop which swaps cards from the outsides to the middle. But this is terrible for the branch predictor because the loop count is totally unpredictable. Simply creating a big ugly switch statement with 21 copies of the same loop gave a 15% performance boost, and cut mispredictions nearly in half. (Which I don't totally understand, because that creates a branch table, which should have an unpredictable indirect branch to index into it... maybe something about branch history.) We can get another 5-10% by using bespoke combinations byte moves and `__builtin_bswap` for each size. And putting `__builtin_unreachable()` as the default case helps, by telling the compiler it doesn't need to check for sizes not specified in the switch statement.
+- There is a clever way to represent the deck as a doubly-linked list, described by [Tom Rokicki](https://tomas.rokicki.com/pancake/), where the stored values are the XOR or sum of adjacent cards. This allows a section of the deck to be reversed by updating just two elements, but requires a linked-list traversal to figure out their positions. This can be a huge savings when operating on large decks, but I didn't try this because for small decks my bswap code was so short that it seemed hard to beat.
+
+### Putting it together
+
+_L(N)_ was known up to _N_=19. _N_=20 seemed doable, and maybe _N_=21 at a stretch -- likely to be around 500 times the effort of _N_=19. So my focus was on making the _N_=21 search feasible.
+
+Doing the basic size-19 search took about 670 CPU-days and confirmed the published result. 
+
+## Results
 
 can generate all size-N decks of length at least _L(N)_ - _D_
 
