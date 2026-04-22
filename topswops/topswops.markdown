@@ -22,6 +22,15 @@ The number of steps in the game for a given deck is the _length_ of the deck. Th
 
 Knuth gives several algorithms for finding a longest Topswops deck in Volume 4, section 7.2.1.2, solution to exercise 108. The last one, which he refers to as the "better" algorithm, is a forward search which fills in the value of cards only when it becomes necessary. We start with a deck of blank cards; then we choose a number for the topmost card and make topswops moves until another blank card is on top. By trying each value not already used for blank cards, we can recursively search all permutations while simultaneously making the topswop moves, so that we don't have to repeat the same initial moves for similar decks. And Knuth has a clever trick for keeping track of where in the initial deck each card started, so that when we choose a value for the top card we know which original card we're choosing: we label the cards in the initial deck with the negative of their position, so the starting deck is -1, -2, -3, etc. Then a blank card is anything negative, and when we choose a value for it we also keep track of which card we assigned in a separate initial deck.
 
+### Faster code
+
+We should really try to reduce the size of the search before optimizing the code, but let's get this simpler part out of the way. We can play a few tricks to streamline the code, taking advantage of the fact that we don't expect to be dealing with decks larger than 21 cards:
+- Use a bit vector to track which cards have already been used. Then we can find the lowest unused card (on most CPUs) with a bit-scanning instruction like that used by `__builtin_ctz()`, and clear the lowest set bit with `x &= (x-1)`.
+- If we select the _N_ as the value for the top card, then we know that in one move we will have _N_ in the last position, and we can perform our pruning check right away, before playing out all the subsequent moves.
+- The simplest code to perform a top-swapping move is just a loop which swaps cards from the outsides to the middle. But this is terrible for the branch predictor because the loop count is totally unpredictable. Simply creating a big ugly case statement with 21 copies of the same loop gave a 15% performance boost, and cut mispredictions nearly in half. (Which I don't totally understand, because that creates a branch table, which should have an unpredictable indirect branch to index into it...) We can get another 5-10% by using bespoke combinations of `__builtin_bswap` for each size.
+
+### Pruning the search
+
 We can prune the search in a few ways, to avoid considering all _N_! decks. The first two pruning strategies are straightforward:
 
 - Never choose 1 as the top card until all other values have been used. Choosing 1 ends the game, so if there is any other choice available then obviously it will result in a longer deck.
@@ -39,6 +48,21 @@ But we can do even better than that. Consider the 10-card search again: with the
 10 4 3 8 2 7 9 5 1 6
 3 4 10 8 2 7 9 5 1 6
 ```
-After 2 moves, no card is in its home position, so no more backward moves are possible. Thus there is a unique 10-card deck, with length 32, which produces the maximum-length 9-card deck. Having done this tiny bit of work, and once we know that _L(10)_ > 32, we can tighten our bound by 1: for a maximum-length 10-card deck, once 10 is in the last position there can be at most _L(9)_-1=29 moves remaining.
+After 2 moves, no card is in its home position, so no more backward moves are possible. Thus there is a unique 10-card deck, with length 32, which produces the maximum-length 9-card deck. (Note that, in general, there could be multiple possible backward moves at one time, so we may have to do a real recursive search to find the longest backward chain of moves.) Having done this tiny bit of work, and once we know that _L(10)_ > 32, we can tighten our bound by 1: for a maximum-length 10-card deck, once 10 is in the last position the remaining deck cannot achieve _L(9)_, and there can be at most _L(9)_-1=29 moves remaining.
 
-We can extend this method: if during the size-9 search we do some extra work (less pruning) and look for decks which are one less than the maximum length, we find that there is a single length-29 deck (`6 1 5 9 2 7 8 3 4`), which can also only go backward 2 steps when we append a 10. So we can tighten the bound for the size-10 search to _L(9)_-2=28.
+We can extend this method: during the size-9 search, we can do some extra work and look for decks with length 29 (one less than _L(9)_), and do the same backward search on those; if they also cannot achieve a new 10-card best, then we can reduce our bound by 1 again. But there's a pitfall here: our search wants to take advantage of the second pruning technique above and only look for derangements. This works when looking for maximum-length decks, but not when we also want to look for shorter decks. For example, there is exactly one length-29 9-card deck that our search will not find: the result of starting with the optimal length-30 deck and making one move, to get `2 7 9 5 1 6 8 3 4`.
+
+In general, we can generate all size-N decks up to some depth _D_ (meaning of length at least _L(N)_ - _D_) by:
+1) reducing our pruning threshold by _D_, and
+2) taking each deck with length _L_ > _D_ and making _L_ - _D_ forward moves.
+Then on each of these decks we can perform a backward search to find the longest size-N+1 deck which could produce it.
+
+can generate all size-N decks of length at least _L(N)_ - _D_
+
+reduce our pruning threshold by some depth _D_, and also take
+
+we can search size-N decks to some depth D (meaning we consider decks of length at least _L(N)_ - _D_) by reducing our pruning threshold by _D_, and also taking each deck with length _L_ > _D_ 
+
+will only look for deranged permutations
+
+which are one less than the maximum length, we find that there is a single length-29 deck (`6 1 5 9 2 7 8 3 4`), which can also only go backward 2 steps when we append a 10. So we can tighten the bound for the size-10 search to _L(9)_-2=28.
