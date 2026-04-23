@@ -22,6 +22,16 @@ The number of steps in the game for a given deck is the _length_ of the deck. Th
 
 In the discussion below, I'll use "an _N-L deck_" to mean an _N_-card deck that takes _L_ moves; the example above is a 5-7 deck.
 
+## Results
+
+But let's not bury the lede -- the new results are:
+
+#### _L(20)_ = 249, with a unique length-249 deck: `2 8 11 6 19 17 13 7 18 3 9 20 15 1 12 4 10 14 5 16`
+
+#### _L(21)_ = 282, with a unique length-282 deck: `3 4 10 20 7 21 19 15 14 8 16 13 5 2 9 12 18 17 1 11 6`
+
+These decks had been previously found through optimization searches, but were not kown for sure to be optimal or unique.
+
 ## A Topswops search algorithm
 
 Knuth gives several algorithms for finding a longest Topswops deck in Volume 4, section 7.2.1.2, solution to exercise 108. The last one, which he refers to as the "better" algorithm, is a forward search which fills in the value of cards only when it becomes necessary. We start with a deck of blank cards; then we choose a number for the topmost card and make topswops moves until another blank card is on top. By trying each value not already used for blank cards, we can recursively search all permutations while simultaneously making the topswop moves, so that we don't have to repeat the same initial moves for similar decks. And Knuth has a clever trick for keeping track of where in the initial deck each card started: we label the cards in the initial deck with the negative of their position, so the starting deck is -1, -2, -3, etc. Then a blank card is anything negative, and when we choose a value for it we also separately keep track of which card we assigned in the initial deck.
@@ -72,18 +82,15 @@ There is a clever way to represent the deck as a doubly-linked list, described b
 
 _L(N)_ was known up to _N_=19. _N_=20 seemed doable, and maybe _N_=21 at a stretch -- likely to be around 500 times the effort of _N_=19. So my focus was on making the _N_=21 search feasible.
 
-Doing the basic size-19 search took about 670 CPU-days and confirmed the published result that _L(19)_=221. Playing topswops with the best-known 20-card deck puts 20 in the last position after 60 moves, leaving a 19-189 deck. So So then I reran the size-19 search with _K_=189, finding all solutions of length 189 and above.
+Doing the basic size-19 search took about 670 CPU-days and confirmed the published result that _L(19)_=221. Playing topswops with the best-known 20-card deck (length 249) puts 20 in the last position after 60 moves, leaving a 19-189 deck. So So then I reran the size-19 search with _K_=189, finding all solutions of length 189 and above, which took about 4 times as long as the original search. This found that a size-19 deck with length >= 190 can only appear in a 20-card deck of length <= 242. So if I just wanted to find the best size-20 deck, then when 20 is in the last position I could prune assuming that the remaining 19 cards cannot take more than 189 moves -- which is 32 less than _L(19)_=221, a huge improvement.
 
-Then I reran the size-19 search to depth 
+But I'm aiming at _N_=21, so I want to run the size-20 search to some greater depth, and I want to choose that depth to minimize the total time for the size-20 and size-21 searches. I took a sampling of sub-trees across both searches, and measured the effect of various options on the execution time. I settled on running size-20 with _K_=240 (depth of 9), which (the deep size-19 search tells me) can still use 192 as the 19-card pruning threshold, which is 29 less than _L(19)_. This then allows the size-21 search to use 249-9=240 as the pruning threshold, which reduces execution time by about 38%. Going deeper at size 20 required a much higher pruning threshold, greatly increasing the time for the size-20 search, while giving only modest reduction in the size-21 search.
 
-## Results
+## Detailed results
 
-can generate all size-N decks of length at least _L(N)_ - _D_
+The size-20 search took ~7200 CPU-days, only ~10x more than the size-19 search due to the stronger pruning, and found that **_L(20)_=249**. The size-21 search took ~XXXXXX CPU-days, and found that **_L(21)_=282**.
 
-reduce our pruning threshold by some depth _D_, and also take
+Here is a complete list of optimal decks for all sizes up to 21:
 
-we can search size-N decks to some depth D (meaning we consider decks of length at least _L(N)_ - _D_) by reducing our pruning threshold by _D_, and also taking each deck with length _L_ > _D_ 
 
-will only look for deranged permutations
 
-which are one less than the maximum length, we find that there is a single length-29 deck (`6 1 5 9 2 7 8 3 4`), which can also only go backward 2 steps when we append a 10. So we can tighten the bound for the size-10 search to _L(9)_-2=28.
