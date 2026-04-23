@@ -65,7 +65,9 @@ This search is still going to take a long time, so we can tune the code a bit, t
 
 _L(N)_ was known up to _N_=19. _N_=20 seemed doable, and maybe _N_=21 at a stretch -- likely to be around 500 times the effort of _N_=19. So my focus was on making the _N_=21 search feasible.
 
-Doing the basic size-19 search took about 670 CPU-days and confirmed the published result. 
+Doing the basic size-19 search took about 670 CPU-days and confirmed the published result that _L(19)_=221. Playing topswops with the best-known 20-card deck puts 20 in the last position after 60 moves, leaving a 189-move 19-card deck. So then I reran the size-19 search up the to maximum useful depth of 221-189=32 (finding all solutions of length 189 and above).
+
+Then I reran the size-19 search to depth 
 
 ## Results
 
