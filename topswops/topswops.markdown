@@ -47,6 +47,16 @@ The third pruning strategy gets more involved. Say we are searching for the best
 
 Knuth says that once the largest _M_ cards are in order at the end of the deck, we can use _L(N-M)_ as a bound. Others have observed that we can do better: we can apply the same bound if the largest _M_ cards are at the end of the deck _**in any order**_, which is a significant improvement for larger decks.
 
+### A backward search
+
+Knuth's "good" algorithm, which he attributes to Pepperdine, is similar except that it moves backwards. We start with a deck that has 1 on top and the rest of the cards blank. At any point the possible backward moves correspond to any known card which is in its home position, or any blank card, which we can assign the value of its current position; we continue until there are no blank cards and no more backward moves possible.
+
+Although Knuth does not mention it, very similar pruning can be applied to the backward search. A block of cards at the end of the deck is fixed if, for each card:
+1) its value is known and it is not in its home position, or
+2) it is blank, but the value of its current position has alread been assigned to another card.
+
+With this pruning, the backward algorithm seems to make fewer top-flipping on average than the forward search, and does not require recording the initial deck. However there is a choice to be made after almost every move, because there are usually multiple backward moves available, which requires a lot more saving and restoring of decks (through deeper recursion, or however you choose to implement it). In the forward search, we only make a choice when the top card is blank, so the recursion is only ever _N_-deep. In my implementation, the extra saving and restoring of the deck outweighs the savings from fewer top-flips, and the backward search was generally 30-50% slower than the forward search. But I can't shake the feeling that there is some improvement that would make the backward search outperform the forward search.
+
 ### More pruning
 
 But we can do even better than that. Consider the 10-card search again: with the logic above, we would say that once 10 is in the last position, there can be at most _L(9)_=30 moves remaining. But can we do even that well? The longest 9-card deck is unique: `6 1 5 9 7 2 8 3 4`. We can append a 10 to that and then work backwards to see what 10-card deck (or decks) could lead to it, producing this series of decks:
