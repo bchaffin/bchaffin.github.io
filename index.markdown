@@ -40,6 +40,7 @@ endless source of fun projects.
 - [Matchstick squares](matchsticks/matchsticks.html) ([A294249](https://oeis.org/A294249))
 - [Repunit primes](repunit-primes/repunit-primes.html) ([A004023](https://oeis.org/A004023))
 - [Primes of the form 3<sup>k</sup> - 2<sup>k</sup>](primes-3k-2k/primes-3k-2k.html) ([A057468](https://oeis.org/A057468))
+- [Topswops: maximum-length decks for sizes 20 and 21](topswops/topswops.html) ([A000375](https://oeis.org/A000375))
 
 ## Other games & puzzles
 
