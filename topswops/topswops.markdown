@@ -106,7 +106,7 @@ But I'm aiming at _n_=21, so I want to run the size-20 search to some greater de
 
 ## Detailed results
 
-The size-20 search took ~7200 CPU-days, only ~10x more than the size-19 search due to the stronger pruning, and found that **_f(20)_=249**. The size-21 search took ~XXXXXX CPU-days, and found that **_f(21)_=282**.
+The size-20 search took ~7200 CPU-days, only ~10x more than the size-19 search due to the stronger pruning, and found that **_f(20)_=249**. The size-21 search took ~181,000 CPU-days, and found that **_f(21)_=282**.
 
 Here is a complete list of optimal decks for all sizes up to 21:
 
