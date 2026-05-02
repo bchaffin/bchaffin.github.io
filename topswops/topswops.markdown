@@ -109,5 +109,66 @@ The size-20 search took ~7200 CPU-days, only ~10x more than the size-19 search d
 
 Here is a complete list of optimal decks for all sizes up to 21:
 
-
-
+- _n_=2, length 1:
+  - `2 1`; final deck sorted
+- _n_=3, length 2:
+  - `2 3 1`; final deck sorted
+  - `3 1 2`; final deck sorted
+- _n_=4, length 4:
+  - `2 4 1 3`; final deck sorted
+  - `3 1 4 2`; final deck sorted
+- _n_=5, length 7:
+  - `3 1 4 5 2`; final deck sorted
+- _n_=6, length 10:
+  - `3 6 5 1 4 2`; final deck sorted
+  - `4 1 5 2 6 3`; final deck sorted
+  - `4 5 6 2 1 3`; final deck sorted
+  - `4 1 6 5 2 3`; final deck sorted
+  - `5 6 4 1 3 2`; final deck sorted
+- _n_=7, length 16:
+  - `3 1 4 6 7 5 2`; final deck sorted
+  - `4 7 6 2 1 5 3`; final deck sorted
+- _n_=8, length 22:
+  - `6 1 5 7 8 3 2 4`; final deck sorted
+- _n_=9, length 30:
+  - `6 1 5 9 7 2 8 3 4`; final deck sorted
+- _n_=10, length 38:
+  - `5 9 1 8 6 2 10 4 7 3`; final deck sorted
+- _n_=11, length 51:
+  - `4 9 11 6 10 7 8 2 1 3 5`; final deck sorted
+- _n_=12, length 65:
+  - `2 6 1 10 11 8 12 3 4 7 9 5`; final deck `1 6 5 2 3 4 7 8 9 10 11 12`
+- _n_=13, length 80:
+  - `2 9 4 5 11 12 10 1 8 13 3 6 7`; final deck sorted
+- _n_=14, length 101:
+  - `2 4 9 3 11 1 8 13 6 5 10 14 12 7`; final deck sorted
+  - `3 9 4 2 11 1 8 13 6 5 10 14 12 7`; final deck sorted
+  - `3 13 4 9 2 1 8 11 6 5 10 14 12 7`; final deck sorted
+  - `9 4 11 3 1 8 13 6 2 5 10 14 12 7`; final deck sorted
+- _n_=15, length 113:
+  - `2 9 4 11 7 1 13 5 3 14 12 15 8 10 6`; final deck `1 3 2 4 5 6 7 8 9 10 11 12 13 14 15`
+  - `3 1 7 11 4 9 2 5 13 14 12 15 8 10 6`; final deck `1 3 2 4 5 6 7 8 9 10 11 12 13 14 15`
+  - `3 1 7 11 15 12 9 4 10 2 13 8 14 5 6`; final deck `1 3 2 4 5 6 7 8 9 10 11 12 13 14 15`
+  - `3 11 8 15 12 10 5 9 2 13 1 4 14 7 6`; final deck `1 3 2 4 5 6 7 8 9 10 11 12 13 14 15`
+  - `5 15 12 11 8 10 3 9 2 13 1 4 14 7 6`; final deck `1 3 2 4 5 6 7 8 9 10 11 12 13 14 15`
+  - `7 12 15 10 13 4 2 11 1 8 9 5 14 3 6`; final deck `1 3 2 4 5 6 7 8 9 10 11 12 13 14 15`
+- _n_=16, length 139:
+  - `9 12 6 7 2 14 8 1 11 13 5 4 15 16 10 3`; final deck `1 3 2 4 5 6 7 8 9 10 11 12 13 14 15 16`
+- _n_=17, length 159:
+  - `8 15 17 13 9 4 6 3 2 12 16 14 11 5 10 1 7`; final deck `1 6 2 4 9 3 7 8 5 10 11 12 13 14 15 16 17`
+  - `2 10 15 11 7 14 5 16 6 4 17 13 1 3 8 9 12`; final deck sorted
+- _n_=18, length 191:
+  - `6 14 9 2 15 8 1 3 4 12 18 5 10 13 16 17 11 7`; final deck sorted
+- _n_=19, length 221:
+  - `12 15 11 1 10 17 19 2 5 8 9 4 18 13 16 7 3 14 6`; final deck `1 10 9 8 7 6 5 4 3 2 11 12 13 14 15 16 17 18 19`
+  - `9 4 19 17 10 1 11 15 12 8 5 2 18 13 16 7 3 14 6`; final deck `1 10 9 8 7 6 5 4 3 2 11 12 13 14 15 16 17 18 19`
+  - `12 1 18 11 2 3 14 6 8 16 5 4 15 10 13 17 19 7 9`; final deck `1 10 9 8 7 6 5 4 3 2 11 12 13 14 15 16 17 18 19`
+  - `12 1 18 11 3 14 2 6 8 16 5 4 15 10 13 17 19 7 9`; final deck `1 10 9 8 7 6 5 4 3 2 11 12 13 14 15 16 17 18 19`
+- _n_=20, length 249:
+  - `2 8 11 6 19 17 13 7 18 3 9 20 15 1 12 4 10 14 5 16`; final deck `1 10 9 8 7 6 5 4 3 2 11 12 13 14 15 16 17 18 19 20`
+- _n_=21, length 282:
+  - `3 4 10 20 7 21 19 15 14 8 16 13 5 2 9 12 18 17 1 11 6`; final deck `1 8 11 10 5 12 7 3 4 2 6 9 13 14 15 16 17 18 19 20 21`
+  - `3 17 7 13 10 14 6 19 15 21 1 9 2 16 18 20 11 8 5 4 12`; final deck `1 11 10 9 5 2 3 4 6 7 8 12 13 14 15 16 17 18 19 20 21`
+  - `6 11 20 18 16 9 14 10 13 2 1 21 15 8 17 19 7 3 5 4 12`; final deck `1 11 10 9 5 2 3 4 6 7 8 12 13 14 15 16 17 18 19 20 21`
+  - `7 17 8 13 10 14 6 19 15 21 1 9 2 16 18 20 11 3 5 4 12`; final deck `1 11 10 9 5 2 3 4 6 7 8 12 13 14 15 16 17 18 19 20 21`
+  - `14 10 13 8 17 11 20 18 16 2 9 1 21 15 6 19 7 3 5 4 12`; final deck `1 11 10 9 5 2 3 4 6 7 8 12 13 14 15 16 17 18 19 20 21`
