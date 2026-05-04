@@ -59,6 +59,7 @@ Knuth says that once the largest _m_ cards are in order at the end of the deck, 
 Knuth's "good" algorithm, which he attributes to Pepperdine, is similar except that it moves backwards. We start with a deck that has 1 on top and the rest of the cards blank. At any point the possible backward moves correspond to any known card which is in its home position, or any blank card, which we can assign the value of its current position; we continue until there are no blank cards and no more backward moves possible.
 
 Although Knuth does not mention it, very similar pruning can be applied to the backward search. A block of cards at the end of the deck is fixed if, for each card:
+
 1) its value is known and it is not in its home position, or
 2) it is blank, but the value of its current position has alread been assigned to another card.
 
@@ -77,6 +78,7 @@ After 2 moves, no card is in its home position, so no more backward moves are po
 We can extend this method: during the size-9 search, we can do some extra work and look for 9-29 decks (one shorter than _f(9)_), and do the same backward search on those; if they also cannot achieve a new 10-card best, then we can reduce our bound by 1 again. But there's a pitfall here: our search wants to take advantage of the second pruning technique above and only look for derangements. This works when looking for maximum-length decks, but not when we also want to look for shorter decks. For example, there is exactly one 9-29 deck that our search will not find: the result of starting with the optimal 9-30 deck and making one move, to get `2 7 9 5 1 6 8 3 4`.
 
 In general, we can generate all size-_n_ decks with length >= _k_ by:
+
 1) pruning the search only when the maximum possible length is less than _k_, and
 2) taking each deck with length _x_ > _k_ and making _x_ - _k_ forward moves.
 
