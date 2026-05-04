@@ -76,7 +76,7 @@ After 2 moves, no card is in its home position, so no more backward moves are po
 
 We can extend this method: during the size-9 search, we can do some extra work and look for 9-29 decks (one shorter than _f(9)_), and do the same backward search on those; if they also cannot achieve a new 10-card best, then we can reduce our bound by 1 again. But there's a pitfall here: our search wants to take advantage of the second pruning technique above and only look for derangements. This works when looking for maximum-length decks, but not when we also want to look for shorter decks. For example, there is exactly one 9-29 deck that our search will not find: the result of starting with the optimal 9-30 deck and making one move, to get `2 7 9 5 1 6 8 3 4`.
 
-In general, we can generate all size-_n_ decks with length >= _k_ by:
+In general, we can generate all size-*n* decks with length >= _k_ by:
 1. pruning the search only when the maximum possible length is less than _k_, and
 2. taking each deck with length _x_ > _k_ and making _x_ - _k_ forward moves.
 
@@ -84,7 +84,7 @@ Then on each of these decks we can perform a backward search to find the longest
 
 We can find the smallest useful _k_ by taking the best-known deck for size _n+1_ and running it forward until _n+1_ is in the last place. For example, when playing the optimal 10-38 deck, 10 ends up in last place after 18 moves. The remaining 9 cards take 20 moves to complete, thus the smallest useful _k_ is 21; looking any deeper than that will not allow us to improve the pruning for size 10.
 
-In principle we could take this further -- we could do the size-(_n-2_) search, appending two cards to each found deck and doing the backward search, to tighten the bound used at size-_n_ when there are two fixed cards at the end of the deck. But by experimentation I found that the large majority of pruning occurs with a single fixed card, and that when there are more fixed cards we almost always prune anyway using the existing bounds, so I didn't take it beyond this first step.
+In principle we could take this further -- we could do the size-(_n-2_) search, appending two cards to each found deck and doing the backward search, to tighten the bound used at size-*n* when there are two fixed cards at the end of the deck. But by experimentation I found that the large majority of pruning occurs with a single fixed card, and that when there are more fixed cards we almost always prune anyway using the existing bounds, so I didn't take it beyond this first step.
 
 ### A few tricks
 
