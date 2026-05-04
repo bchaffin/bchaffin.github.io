@@ -59,9 +59,8 @@ Knuth says that once the largest _m_ cards are in order at the end of the deck, 
 Knuth's "good" algorithm, which he attributes to Pepperdine, is similar except that it moves backwards. We start with a deck that has 1 on top and the rest of the cards blank. At any point the possible backward moves correspond to any known card which is in its home position, or any blank card, which we can assign the value of its current position; we continue until there are no blank cards and no more backward moves possible.
 
 Although Knuth does not mention it, very similar pruning can be applied to the backward search. A block of cards at the end of the deck is fixed if, for each card:
-
-1) its value is known and it is not in its home position, or
-2) it is blank, but the value of its current position has alread been assigned to another card.
+1. its value is known and it is not in its home position, or
+2. it is blank, but the value of its current position has alread been assigned to another card.
 
 With this pruning, the backward algorithm seems to make fewer top-flipping on average than the forward search, and does not require recording the initial deck. However there is a choice to be made after almost every move, because there are usually multiple backward moves available, which requires a lot more saving and restoring of decks (through deeper recursion, or however you choose to implement it). In the forward search, we only make a choice when the top card is blank, so the recursion is only ever _n_-deep. In my implementation, the extra saving and restoring of the deck outweighs the savings from fewer top-flips, and the backward search was generally 30-50% slower than the forward search. But I can't shake the feeling that there is some improvement that would make the backward search outperform the forward search.
 
@@ -78,9 +77,8 @@ After 2 moves, no card is in its home position, so no more backward moves are po
 We can extend this method: during the size-9 search, we can do some extra work and look for 9-29 decks (one shorter than _f(9)_), and do the same backward search on those; if they also cannot achieve a new 10-card best, then we can reduce our bound by 1 again. But there's a pitfall here: our search wants to take advantage of the second pruning technique above and only look for derangements. This works when looking for maximum-length decks, but not when we also want to look for shorter decks. For example, there is exactly one 9-29 deck that our search will not find: the result of starting with the optimal 9-30 deck and making one move, to get `2 7 9 5 1 6 8 3 4`.
 
 In general, we can generate all size-_n_ decks with length >= _k_ by:
-
-1) pruning the search only when the maximum possible length is less than _k_, and
-2) taking each deck with length _x_ > _k_ and making _x_ - _k_ forward moves.
+1. pruning the search only when the maximum possible length is less than _k_, and
+2. taking each deck with length _x_ > _k_ and making _x_ - _k_ forward moves.
 
 Then on each of these decks we can perform a backward search to find the longest size-(_n+1_) deck which could produce it. Assuming those backward searches don't find anything which matches the already-known lower bound for _f(n+1)_, then when doing the search for size _n+1_ we can use _k_ as the bound for our pruning when there is one fixed card at the end of the deck. Since the execution time is proportional to at least _n!_ (and in fact more, because larger decks take more moves), it's worth spending a lot more effort at one size to save on the next.
 
