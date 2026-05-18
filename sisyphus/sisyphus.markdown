@@ -83,4 +83,4 @@ After 2.5*10<sup>16</sup> terms, the only value under 10<sup>6</sup> which has n
 
 The sequence also goes all the way down to 1 a number of times, though the last was less than 3% of the way to the end of the computation. The indices of the terms which are 1 became the new sequence Axxx.
 
-The final known term is a347297(x)=x, with x the next number to be added. This is enough information to resume the computation; but since I only tracked the appearance of numbers up to 10<sup>6</sup>, only one more record-low term can be found. More than that would need to restart at the beginning and track more small values.
+The final known term is a347297(25000000000000002) = 20022666037368021, with 12500000013450656 the next number to be added. This is enough information to resume the computation; but since I only tracked the appearance of numbers up to 10<sup>6</sup>, only one more record-low term can be found. More than that would need to restart at the beginning and track more small values.
