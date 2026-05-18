@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "The Sisyphus Sequences WORK IN PROGRESS"
+title:  "The Sisyphus Sequences"
 date:   2026-04-01
 ---
 
@@ -51,7 +51,7 @@ The last known term is a350877(10000000000000008) = 839852466559541, with 127874
 
 ### Results - simple version
 
-I computed the simple Sisyphus sequence [A347297](https://oeis.org/A347297) to 2.5*10<sup>16</sup> terms. Record-low values and where they occur were not previously entered in the OEIS, so this created two new sequences Axxx and Axxx, for the values and indices at which they occur:
+I computed the simple Sisyphus sequence [A347297](https://oeis.org/A347297) to 2.5*10<sup>16</sup> terms. Record-low values and where they occur were not previously entered in the OEIS, so this created two new sequences [A396163](https://oeis.org/A396163) and [A396164](https://oeis.org/A396164), for the values and indices at which they occur:
 ```
                n  a(n)
                2   2
@@ -81,6 +81,6 @@ I computed the simple Sisyphus sequence [A347297](https://oeis.org/A347297) to 2
 ```
 After 2.5*10<sup>16</sup> terms, the only value under 10<sup>6</sup> which has not appeared is 579881. There was a "near miss" at a(9,721,580,668,313,845) = 642436, which filled in the only other missing number under 10<sup>6</sup>. Here are [all the numbers up to 10<sup>6</sup>](sis-simple-appear-1e6.txt) which have appeared.
 
-The sequence also goes all the way down to 1 a number of times, though the last was less than 3% of the way to the end of the computation. The indices of the terms which are 1 became the new sequence Axxx.
+The sequence also goes all the way down to 1 a number of times, though the last was less than 3% of the way to the end of the computation. The indices of the terms which are 1 became the new sequence [A396165](https://oeis.org/A396165).
 
 The final known term is a347297(25000000000000002) = 20022666037368021, with 12500000013450656 the next number to be added. This is enough information to resume the computation; but since I only tracked the appearance of numbers up to 10<sup>6</sup>, only one more record-low term can be found. More than that would need to restart at the beginning and track more small values.
