@@ -45,6 +45,8 @@ After 10<sup>16</sup> terms, the first few numbers which have not yet appeared a
 
 A plot of numbers up to 10<sup>6</sup> and where they appear does not reveal any structure, either on a linear scale or log scale -- new small numbers continue to occur with steadily decreasing frequency.
 
+[<img src="sis-prime-appear.png" width="350">](sis-prime-appear.png) [<img src="sis-prime-appear-log.png" width="350">](sis-prime-appear-log.png)
+
 The last known term is a350877(10000000000000008) = 839852466559541, with 127874181528808199 the last prime added. This is enough information to resume the computation.
 
 ### Results - simple version
