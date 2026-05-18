@@ -41,7 +41,11 @@ As long as there are enough prime-generating threads in the pool, this allows th
 
 I computed the main Sisyphus sequence [A350877](https://oeis.org/A350877) to 10<sup>16</sup> terms, finding one new record-low value: 127 finally appears at term 7,897,675,381,151,340, more than two orders of magnitude further out than the previous record-low value of 115.
 
-The last known term is a350877(x)=(x), with p the last prime added. This is enough information to resume the computation. After 10<sup>16</sup> terms, the first few numbers which have not yet appeared are 167, 211, 296, 360, 443, 497, 639, 695, 765, 803, 843, 909, 995, 996. Here are [the XXX numbers under 10<sup>6</sup> which have not appeared](), arranged in XXX "chains" of powers of 2 times a small missing number. And here are [all the numbers up to 10<sup>6</sup> which have appeared]().
+After 10<sup>16</sup> terms, the first few numbers which have not yet appeared are 167, 211, 296, 360, 443, 497, 639, 695, 765, 803, 843, 909, 995, 996. Here are [the 101680 numbers under 10<sup>6</sup> which have not appeared](sis-prime-missing-1e6.txt), arranged in 56205 "chains" of powers of 2 times a small missing number. And here are [all the numbers up to 10<sup>6</sup> which have appeared](sis-simple-appear.txt).
+
+A plot of numbers up to 10<sup>6</sup> and where they appear does not reveal any structure, either on a linear scale or log scale -- new small numbers continue to occur with steadily decreasing frequency.
+
+The last known term is a350877(10000000000000008) = 839852466559541, with 127874181528808199 the last prime added. This is enough information to resume the computation.
 
 ### Results - simple version
 
