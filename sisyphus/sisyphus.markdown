@@ -79,7 +79,7 @@ I computed the simple Sisyphus sequence [A347297](https://oeis.org/A347297) to 2
 2011124785827447   505823
 4244919354512002   552247
 ```
-After 2.5*10<sup>16</sup> terms, the only value under 10<sup>6</sup> which has not appeared is 579881. There was a "near miss" at a(9,721,580,668,313,845) = 642436, which filled in the only other missing number under 10<sup>6</sup>. Here are [all the numbers up to 10<sup>6</sup>]() which have appeared.
+After 2.5*10<sup>16</sup> terms, the only value under 10<sup>6</sup> which has not appeared is 579881. There was a "near miss" at a(9,721,580,668,313,845) = 642436, which filled in the only other missing number under 10<sup>6</sup>. Here are [all the numbers up to 10<sup>6</sup>](sis-simple-appear-1e6.txt) which have appeared.
 
 The sequence also goes all the way down to 1 a number of times, though the last was less than 3% of the way to the end of the computation. The indices of the terms which are 1 became the new sequence Axxx.
 
