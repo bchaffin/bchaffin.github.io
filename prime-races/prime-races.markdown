@@ -5,7 +5,7 @@ date:   2026-05-30
 ---
 
 
-### Background
+## Background
 
 Thanks to [Mike Keith](https://www.cadaeic.net/) for introducing me to this topic.
 
@@ -20,7 +20,26 @@ Some other races we'll look at:
 - [A130911](https://oeis.org/A130911) - Race between evil primes (which have an even number of 1s in their binary representation) and odious primes (which have an odd number of 1s). It is conjectured that evil never leads after the first 3 primes.
 - [A156549](https://oeis.org/A156549) - Race between primes which have an even number of 0s in binary vs. those which have an odd number of 0s. It appears that an odd number of 0s always leads. It's somewhat surprising that odd leads for both 1s and 0s; more on this below.
 
-### Prime tabulation
+## Computation
+
+I look at these races for all primes up to 10<sup>19</sup>. The basic code for counting a prime race is quite simple: using the super-fast [primesieve](https://github.com/kimwalisch/primesieve) library, generate sequential primes, and count up their residues mod some value. But to make real progress we want to parallelize this process; while counting residues within some range, we don't know the full counts and so we can't tell whether one residue takes the lead.
+
+To see the solution, we can take the mod-100 race as an example. We are interested only in residue 41, so as we process each block we track the largest lead that 41 ever has over each of the other residues, and output that at the end of the block, along with the counts for each residue. Then in a post-processing step we look at the output of each block sequentially, calculating the total count for each residue, and checking whether 41 got far enough ahead within this block that it could have taken the lead.
+
+For example, say that at the beginning of this block, 41 was behind residue R by 1000. If the largest lead that 41 had over R at any point within this block is less than or equal to 1000, then it can't possibly pass R overall; on the other hand, if the largest lead within this block is greater than 1000, then 41 will pass R at some point. If 41 passes *all* of the other residues, then it's possible that it takes the overall lead -- though not guaranteed, because even if it is ahead of every other residue at some point, it may not be ahead of all of them at the same time.
+
+If we find a block where 41 passes all the other residues, we'll have to rerun that block in "safe mode", starting with the full counts up to that point, to see if it really does come out ahead.
+
+For simpler 2-way races, like the residue +/-1 race, there's no doubt -- if 1's largest lead is greater than its starting deficit, then it takes the lead within this block. But we'll still need to rerun in safe mode to find exactly where.
+
+For the mod-10 "leaderboard" race, we track the largest lead of every residue over every other residue (4*3 = 12 values total), so that we can check whether, within each block, first place is ahead of second, third, and fourth; second is ahead of third and fourth; and third is ahead of fourth. Again, we'll need to rerun to check whether this leaderboard really happens, and find exactly where.
+
+## Results
+
+### Mod-100 race
+Sadly, residue 41 never takes the lead up to 10^19. Here's a graph which shows, at the end of each block of 2.5*10<sup>12</sup>, how far 41 is behind the leader, and which residue is in the lead. (Note that this does not show every change of leader within the blocks, or the closest that 41 ever comes to the lead; but it gives a good idea of the overall behavior.)
+
+## Prime tabulation
 
 As long as I was generating primes over a large range, I thought I might as well collect some other information along the way. Some of the basic counts of primes, such as the number of primes below 10<sup>n</sup>, are already known to large numbers. But I was able to extend a number of other sequences:
 - [A095005](https://oeis.org/A095005) and [A095006](https://oeis.org/A095006) - number of odious/evil primes in power-of-2 ranges
