@@ -46,6 +46,7 @@ As long as I was generating primes over a large range, I thought I might as well
 - [A129542](https://oeis.org/A129542) and [A129697](https://oeis.org/A129697) - number of isolated (non-twin) primes less than 10<sup>n</sup>, and their sum
 - [A033843](https://oeis.org/A033843) - number of twin primes less than 2<sup>n</sup>
 - [A007508](https://oeis.org/A007508) and [A118552](https://oeis.org/A118552) - number of twin primes less than 10<sup>n</sup>, and their sum
+- [A396644](https://oeis.org/A396644) (new) - number of cousin primes less than 2<sup>n</sup>
 - [A080840](https://oeis.org/A080840) and [A152127](https://oeis.org/A152127) - number of cousin primes (primes 4 apart) less than 10<sup>n</sup>, and their sum
 - [A080841](https://oeis.org/A080841) - number of primes 6 apart less than 10<sup>n</sup>
 - [A093738](https://oeis.org/A093738) and [A341843](https://oeis.org/A341843) - number of *consecutive* primes 6 apart less than 10<sup>n</sup>, or less than 2<sup>n</sup>
