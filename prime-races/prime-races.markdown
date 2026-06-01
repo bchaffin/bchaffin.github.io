@@ -39,6 +39,12 @@ For the mod-10 "leaderboard" race, we track the largest lead of every residue ov
 ### Mod-100 race
 Sadly, residue 41 never takes the lead up to 10^19. Here's a graph which shows, at the end of each block of 2.5*10<sup>12</sup>, how far 41 is behind the leader, and which residue is in the lead. (Note that this does not show every change of leader within the blocks, or the closest that 41 ever comes to the lead; but it gives a good idea of the overall behavior.)
 
+### Odious vs. evil
+
+The race between odious and evil primes is fascinating. At first glance, one might expect primes to have as little structure in their binary bits as they do in their decimal digits, and that therefore the chances of having an even or odd number of 1's in binary would be balanced. However this appears not to be the case. [Vladimir Shevelev](https://arxiv.org/abs/0706.0786) gives some explanation as to why, and conjectures that after the first few primes, odious primes always lead. This is certainly true as far as 10<sup>19</sup>. But what I find really striking is that the cumulative lead of odious over evil shows a fractal structure, as seen in these graphs, which have *n* on the X axis and the delta between odious and evil primes up to *n* on the Y:
+
+
+
 ## Prime tabulation
 
 As long as I was generating primes over a large range, I thought I might as well collect some other information along the way. Some of the basic counts of primes, such as the number of primes below 10<sup>n</sup>, are already known to large numbers. But I was able to extend a number of other sequences:
