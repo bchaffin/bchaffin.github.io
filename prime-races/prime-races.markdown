@@ -44,6 +44,7 @@ Sadly, residue 41 never takes the lead up to 10^19. Here's a graph which shows, 
 As long as I was generating primes over a large range, I thought I might as well collect some other information along the way. Some of the basic counts of primes, such as the number of primes below 10<sup>n</sup>, are already known to large numbers. But I was able to extend a number of other sequences:
 - [A095005](https://oeis.org/A095005) and [A095006](https://oeis.org/A095006) - number of odious/evil primes in power-of-2 ranges
 - [A129542](https://oeis.org/A129542) and [A129697](https://oeis.org/A129697) - number of isolated (non-twin) primes less than 10<sup>n</sup>, and their sum
+- [A033843](https://oeis.org/A033843) - number of twin primes less than 2<sup>n</sup>
 - [A007508](https://oeis.org/A007508) and [A118552](https://oeis.org/A118552) - number of twin primes less than 10<sup>n</sup>, and their sum
 - [A080840](https://oeis.org/A080840) and [A152127](https://oeis.org/A152127) - number of cousin primes (primes 4 apart) less than 10<sup>n</sup>, and their sum
 - [A080841](https://oeis.org/A080841) - number of primes 6 apart less than 10<sup>n</sup>
