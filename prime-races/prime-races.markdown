@@ -51,10 +51,15 @@ Zooming in on a few ranges, we can see that each region from 2<sup>n</sup> to 2<
 [![Excess of odious vs. evil primes from 2^53 to 2^55](odious-53-55.png)](odious-53-55.png)
 [![Excess of odious vs. evil primes from 2^55 to 2^57](odious-55-57.png)](odious-55-57.png)
 
+### Odd-zeros vs. even-zeros
+
+Related to the odious/evil race is the race between primes which have an odd number of 0s in binvary vs. an even number of 0s. For numbers with an even number of bits, the parity of the number of 1s and 0s is the same; for numbers with an odd number of bits, the parity of 1s and 0s is opposite. 
+
 ## Prime tabulation
 
 As long as I was generating primes over a large range, I thought I might as well collect some other information along the way. Some of the basic counts of primes, such as the number of primes below 10<sup>n</sup>, are already known to large numbers. But I was able to extend a number of other sequences:
 - [A095005](https://oeis.org/A095005) and [A095006](https://oeis.org/A095006) - number of odious/evil primes in power-of-2 ranges
+- [A127977](https://oeis.org/A127977) - minimum lead of odious primes over evil primes in power-of-2 intervals
 - [A129542](https://oeis.org/A129542) and [A129697](https://oeis.org/A129697) - number of isolated (non-twin) primes less than 10<sup>n</sup>, and their sum
 - [A033843](https://oeis.org/A033843) - number of twin primes less than 2<sup>n</sup>
 - [A007508](https://oeis.org/A007508) and [A118552](https://oeis.org/A118552) - number of twin primes less than 10<sup>n</sup>, and their sum
