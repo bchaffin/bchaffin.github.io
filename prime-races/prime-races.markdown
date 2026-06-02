@@ -41,7 +41,11 @@ Sadly, residue 41 never takes the lead up to 10^19. Here's a graph which shows, 
 
 ### Odious vs. evil
 
-The race between odious and evil primes is fascinating. At first glance, one might expect primes to have as little structure in their binary bits as they do in their decimal digits, and that therefore the chances of having an even or odd number of 1's in binary would be balanced. However this appears not to be the case. [Vladimir Shevelev](https://arxiv.org/abs/0706.0786) gives some explanation as to why, and conjectures that after the first few primes, odious primes always lead. This is certainly true as far as 10<sup>19</sup>. But what I find really striking is that the cumulative lead of odious over evil shows a fractal structure which repeats every power of 4, as seen in these graphs, which have *n* on the X axis and the delta between odious and evil primes up to *n* on the Y:
+The race between odious and evil primes is fascinating. At first glance, one might expect primes to have as little structure in their binary bits as they do in their decimal digits, and that therefore the chances of having an even or odd number of 1's in binary would be balanced. However this appears not to be the case. [Vladimir Shevelev](https://arxiv.org/abs/0706.0786) gives some explanation as to why, and conjectures that after the first few primes, odious primes always lead. This is certainly true as far as 10<sup>19</sup>. But what I find really striking is that the cumulative lead of odious over evil shows a fractal structure which repeats every power of 4, as seen in this graph, which has *n* on the X axis and the delta between odious and evil primes up to *n* on the Y:
+
+[![Excess of odious vs. evil primes from 0 to 2^63](odious-00-63.png)](odious-00-63.png)
+
+Zooming in on a few ranges, we can see that each region from 2<sup>n</sup> to 2<sup>n+2</sup> looks virtually identical:
 
 [![Excess of odious vs. evil primes from 2^51 to 2^53](odious-51-53.png)](odious-51-53.png)
 [![Excess of odious vs. evil primes from 2^53 to 2^55](odious-53-55.png)](odious-53-55.png)
