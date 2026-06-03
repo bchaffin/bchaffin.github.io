@@ -42,6 +42,18 @@ Sadly, residue 41 never takes the lead up to 10^19. Here's a graph which shows, 
 
 [![Residue 41 mod 100](race-mod100.png)](race-mod100.png)
 
+### Mod-10 race
+
+In the mod-10 race there are four possible residues (1, 3, 7, and 9), and we're checking for every one of the 24 orderings of how they rank ([A390417](https://oeis.org/A390417)). I filled in three missing terms from that sequence:
+
+- Ordering 9,7,1,3 happens at prime 2,780,347,060,681,349
+- Ordering 1,7,9,3 happens at prime 322,521,515,161,309,103
+- Ordering 9,1,7,3 happens at prime 970,532,570,111,534,567
+
+But the remaining two orderings (1,9,3,7 and 1,9,7,3) do not appear up to 10<sup>19</sup>. Here is a graph showing which ordering is in the lead:
+
+[![Mod-10 prime race leaderboards](race-mod10.png)](race-mod10.png)
+
 ### Odious vs. evil
 
 The race between odious and evil primes is fascinating. At first glance, one might expect primes to have as little structure in their binary bits as they do in their decimal digits, and that therefore the chances of having an even or odd number of 1's in binary would be balanced. However this appears not to be the case. [Vladimir Shevelev](https://arxiv.org/abs/0706.0786) gives some explanation as to why, and conjectures that after the first few primes, odious primes always lead. This is certainly true as far as 10<sup>19</sup>. But what I find really striking is that the cumulative lead of odious over evil shows a fractal structure which repeats every power of 4, as seen in this graph, which has *n* on the X axis and the delta between odious and evil primes up to *n* on the Y:
