@@ -54,6 +54,12 @@ But the remaining two orderings (1,9,3,7 and 1,9,7,3) do not appear up to 10<sup
 
 [![Mod-10 prime race leaderboards](race-mod10.png)](race-mod10.png)
 
+### 1 vs. -1, mod 12 and mod 24
+
+In this race, we're looking for when residue 1 overtakes residue -1, for moduli 12 and 24. (All other moduli under 1000 are already known, in [A275939](https://oeis.org/A275939).) In a comment in the OEIS, Kevin Ford says: "In the case of the mod 12 race, it is probably around exp(187.536), or about 2.79 x 10<sup>81</sup>.  For the mod 24 race, it's about exp(43.453)=7.437... x 10<sup>18</sup>."
+
+Sure enough, I found that for mod 24, residue 1 takes the lead over -1 at prime 7,390,188,907,282,602,529, very close to Ford's prediction. And, not surprisingly, 1 never leads for mod 12 up to 10<sup>19</sup>.
+
 ### Odious vs. evil
 
 The race between odious and evil primes is fascinating. At first glance, one might expect primes to have as little structure in their binary bits as they do in their decimal digits, and that therefore the chances of having an even or odd number of 1's in binary would be balanced. However this appears not to be the case. [Vladimir Shevelev](https://arxiv.org/abs/0706.0786) gives some explanation as to why, and conjectures that after the first few primes, odious primes always lead. This is certainly true as far as 10<sup>19</sup>. But what I find really striking is that the cumulative lead of odious over evil shows a fractal structure which repeats every power of 4, as seen in this graph, which has *n* on the X axis and the delta between odious and evil primes up to *n* on the Y:
