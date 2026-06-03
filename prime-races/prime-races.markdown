@@ -37,7 +37,10 @@ For the mod-10 "leaderboard" race, we track the largest lead of every residue ov
 ## Results
 
 ### Mod-100 race
-Sadly, residue 41 never takes the lead up to 10^19. Here's a graph which shows, at the end of each block of 2.5*10<sup>12</sup>, how far 41 is behind the leader, and which residue is in the lead. (Note that this does not show every change of leader within the blocks, or the closest that 41 ever comes to the lead; but it gives a good idea of the overall behavior.)
+
+Sadly, residue 41 never takes the lead up to 10^19. Here's a graph which shows, within each block of 2.5*10<sup>12</sup>, the closest 41 came to the lead, and which residue is in the lead. So although 41 must take the lead eventually, it looks like it could be a long way out.
+
+[![Residue 41 mod 100](race-mod100.png)](race-mod100.png)
 
 ### Odious vs. evil
 
