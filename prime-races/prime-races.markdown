@@ -92,6 +92,7 @@ As long as I was generating primes over a large range, I thought I might as well
 - [A091634](https://oeis.org/A091634) and friends - number of primes less than 10<sup>n</sup> which do *not* contain digit *X*
 - [A231590](https://oeis.org/A231590) and friends - total number of digit *X* in primes less than 10<sup>n</sup>
 - [A244191](https://oeis.org/A244191) and [A244265](https://oeis.org/A244265) - most common final digit for primes less than 10<sup>n</sup>, and its frequency
+- [A244192](https://oeis.org/A244192) and [A244267](https://oeis.org/A244267) - most common 2-digit ending of primes less than 10<sup>n</sup>, and its frequency
 - [A091117](https://oeis.org/A091117) - number of primes which are 2 mod 5 less than 10<sup>n</sup>
 - [A091115](https://oeis.org/A091115) and friends - mod-6 residue counts less than 10<sup>n</sup>
 - [A091120](https://oeis.org/A091120) and friends - mod-7 residue counts less than 10<sup>n</sup>
