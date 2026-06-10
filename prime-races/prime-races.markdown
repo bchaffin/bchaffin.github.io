@@ -70,7 +70,11 @@ The race between odious and evil primes is fascinating. At first glance, one mig
 
 Looking at some power-of-4 ranges, the shape of the graph is the same from [2<sup>51</sup> - 2<sup>53</sup>](odious-51-53.png), [2<sup>53</sup> - 2<sup>55</sup>](odious-53-55.png), and [2<sup>55</sup> - 2<sup>57</sup>](odious-55-57.png).
 
-This is definitely the most surprising result of this project!
+The parity of 1's is balanced if we look at all integers, or all odd integers. But this same structure emerges as soon as we exclude multiples of 3. The graph below shows the odd-ones vs. even-ones delta when excluding multiples of 3, or 3 and 5, or 3 and 5 and 7, etc. The more prime multiples we exclude, the messier the line gets, until the bottom blue line, which shows the odious/evil race for just the primes; at this scale, there is no discernable pattern. But as we see in the graphs above, at large scales the graph of primes is indistinguishable from the graph when we exclude just multiples of 3.
+
+[![Odious vs. evil excluding multiples of small primes](odious-multiples.png)](odious-multiples.png)
+
+For me, this was definitely the most surprising result of this project!
 
 ### Odd-zeros vs. even-zeros
 
