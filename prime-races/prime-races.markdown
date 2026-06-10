@@ -73,7 +73,9 @@ This is definitely the most surprising result of this project!
 
 ### Odd-zeros vs. even-zeros
 
-Related to the odious/evil race is the race between primes which have an odd number of 0s in binvary vs. an even number of 0s. For numbers with an even number of bits, the parity of the number of 1s and 0s is the same; for numbers with an odd number of bits, the parity of 1s and 0s is opposite. 
+Related to the odious/evil race is the race between primes which have an odd number of 0s in binary vs. an even number of 0s. For numbers with an even number of bits -- where odious's lead grows steeply -- the parity of the number of 1s and 0s is the same; for numbers with an odd number of bits -- where the odious vs. evil race is overall flat -- the parity of 1s and 0s is opposite. The result is that odd-zeros seem to always lead, as seen here, with odious vs. evil in blue and odd-zero vs. even-zero in orange:
+
+[![Excess of odious vs. evil primes and odd-zero vs. even-zero primes from 0 to 2^35](odious-zeros-00-63.png)](odious-zeros-00-63.png)
 
 ## Prime tabulation
 
