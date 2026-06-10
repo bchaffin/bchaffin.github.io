@@ -50,9 +50,10 @@ In the mod-10 race there are four possible residues (1, 3, 7, and 9), and we're 
 - Ordering 1,7,9,3 happens at prime 322,521,515,161,309,103
 - Ordering 9,1,7,3 happens at prime 970,532,570,111,534,567
 
-But the remaining two orderings (1,9,3,7 and 1,9,7,3) do not appear up to 10<sup>19</sup>. Here is a graph showing which ordering is in the lead:
+But the remaining two orderings (1,9,3,7 and 1,9,7,3) do not appear up to 10<sup>19</sup>. Here are graphs showing which ordering is in the lead, first on a linear scale and then on a log scale:
 
 [![Mod-10 prime race leaderboards](race-mod10.png)](race-mod10.png)
+[![Mod-10 prime race leaderboards, log scale](race-mod10-log.png)](race-mod10-log.png)
 
 ### 1 vs. -1, mod 12 and mod 24
 
