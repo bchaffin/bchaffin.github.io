@@ -14,9 +14,9 @@ The [Chebyshev bias](https://en.wikipedia.org/wiki/Chebyshev%27s_bias) is the ob
 Mike's initial question was about primes mod 100. There are 40 possible residues, and 39 of them are known to lead at some point; the last of those is 43, which takes the lead at 11342219743. Only 41 has never been in front, so naturally we'd like to find the place where it takes the lead (which it must, eventually).
 
 Some other races we'll look at:
+- [A390417](https://oeis.org/A390417) - For mod 10, there are four possible residues (1, 3, 7, and 9). Look for when each of the 24 possible "leaderboard" rankings occurs. Five of the possible rankings had not been found.
 - [A275939](https://oeis.org/A275939) - For every modulus *q*, consider the race between residue 1 and -1. Residue 1 is generally disadvantaged, so the question is when does 1 take the lead. The answer was known for all *q* < 1000, except for *q*=12 and *q*=24.
 - [A380877](https://oeis.org/A380877) - When is residue 1 tied with residue 7, mod 12. Only 8 terms were known, the largest of which was 461.
-- [A390417](https://oeis.org/A390417) - For mod 10, there are four possible residues (1, 3, 7, and 9). Look for when each of the 24 possible "leaderboard" rankings occurs. Five of the possible rankings had not been found.
 - [A130911](https://oeis.org/A130911) - Race between evil primes (which have an even number of 1s in their binary representation) and odious primes (which have an odd number of 1s). It is conjectured that evil never leads after the first 3 primes.
 - [A156549](https://oeis.org/A156549) - Race between primes which have an even number of 0s in binary vs. those which have an odd number of 0s. It appears that an odd number of 0s always leads. It's somewhat surprising that odd leads for both 1s and 0s; more on this below.
 
@@ -60,6 +60,15 @@ But the remaining two orderings (1,9,3,7 and 1,9,7,3) do not appear up to 10<sup
 In this race, we're looking for when residue 1 overtakes residue -1, for moduli 12 and 24. (All other moduli under 1000 are already known, in [A275939](https://oeis.org/A275939).) In a comment in the OEIS, Kevin Ford says: "In the case of the mod 12 race, it is probably around exp(187.536), or about 2.79 x 10<sup>81</sup>.  For the mod 24 race, it's about exp(43.453)=7.437... x 10<sup>18</sup>."
 
 Sure enough, I found that for mod 24, residue 1 takes the lead over -1 at prime 7,390,188,907,282,602,529, very close to Ford's prediction. And, not surprisingly, 1 never leads for mod 12 up to 10<sup>19</sup>.
+
+### 1 vs. 7, mod 12
+
+Here we are looking for primes where residues 1 at 7 (mod 12) are tied ([A380877](https://oeis.org/A380877). The first tie after prime 461 is at 27489101529397. That is the start of the first of three regions where the two residues are roughly equal and trade places many times:
+- From 27489101529397 to 27555497263759
+- From 97520543924496577 to 98977289882800319
+- From 108246985167355561 to 108251357023703549
+
+After that, 7 leads 1 all the way out to 10<sup>19</sup>.
 
 ### Odious vs. evil
 
