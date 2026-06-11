@@ -38,10 +38,12 @@ endless source of fun projects.
 - [Multiplicative persistence](persistence/persistence.html) ([A003001](https://oeis.org/A003001))
 - [Zeros in powers of 2](twozeros/twozeros.html) ([A006889](https://oeis.org/A006889))
 - [Matchstick squares](matchsticks/matchsticks.html) ([A294249](https://oeis.org/A294249))
-- [Repunit primes](repunit-primes/repunit-primes.html) ([A004023](https://oeis.org/A004023))
-- [Primes of the form 3<sup>k</sup> - 2<sup>k</sup>](primes-3k-2k/primes-3k-2k.html) ([A057468](https://oeis.org/A057468))
 - [Topswops: maximum-length decks for sizes 20 and 21](topswops/topswops.html) ([A000375](https://oeis.org/A000375))
 - [The Sisyphus sequences](sisyphus/sisyphus.html) ([A350877](https://oeis.org/A350877) and [A347297](https://oeis.org/A347297))
+- Primes:
+  - [Prime races and tabulation](prime-races/prime-races.html)
+  - [Primes of the form 3<sup>k</sup> - 2<sup>k</sup>](primes-3k-2k/primes-3k-2k.html) ([A057468](https://oeis.org/A057468))
+  - [Repunit primes](repunit-primes/repunit-primes.html) ([A004023](https://oeis.org/A004023))
 
 ## Other games & puzzles
 
