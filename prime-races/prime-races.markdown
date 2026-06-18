@@ -46,14 +46,15 @@ Sadly, residue 41 never takes the lead up to 10^19. Here's a graph which shows, 
 
 In the mod-10 race there are four possible residues (1, 3, 7, and 9), and we're checking for every one of the 24 orderings of how they rank ([A390417](https://oeis.org/A390417)). I filled in three missing terms from that sequence:
 
-- Ordering 9,7,1,3 happens at prime 2,780,347,060,681,349
-- Ordering 1,7,9,3 happens at prime 322,521,515,161,309,103
-- Ordering 9,1,7,3 happens at prime 970,532,570,111,534,567
+- Ranking 9,7,1,3 happens at prime 2,780,347,060,681,349
+- Ranking 1,7,9,3 happens at prime 322,521,515,161,309,103
+- Ranking 9,1,7,3 happens at prime 970,532,570,111,534,567
 
-But the remaining two orderings (1,9,3,7 and 1,9,7,3) do not appear up to 10<sup>19</sup>. Here are graphs showing which ordering is in the lead, first on a linear scale and then on a log scale:
+But the remaining two rankings (1,9,3,7 and 1,9,7,3) do not appear up to 10<sup>19</sup>. 
 
-[![Mod-10 prime race leaderboards](race-mod10.png)](race-mod10.png)
-[![Mod-10 prime race leaderboards, log scale](race-mod10-log.png)](race-mod10-log.png)
+Here is a log-scale graph which shows which ranking is in the lead up to 10<sup>19</sup> -- a big thanks to Mike Keith for adding the colors and annotations, which show that because the quadratic residues (1 and 9) are less often in the lead than the non-quadratic residues (3 and 7), rankings with quadratic residues at the front occur much less frequently. The points up to 10<sup>13</sup> are exact, as are the first appearances of each ranking. Above 10<sup>13</sup>, some of the points may be false positives, where a ranking came close to being in the lead but didn't quite get there.
+
+[![Mod-10 prime race leaderboards, log scale](Mod10-LeaderBoardRace.png)](Mod10-LeaderBoardRace.png)
 
 ### 1 vs. -1, mod 12 and mod 24
 
