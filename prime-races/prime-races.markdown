@@ -11,7 +11,7 @@ Thanks to [Mike Keith](https://www.cadaeic.net/) for introducing me to this topi
 
 The [Chebyshev bias](https://en.wikipedia.org/wiki/Chebyshev%27s_bias) is the observation that if one counts primes mod 4 up to some limit, there are very often more primes of the form 4k+3 than 4k+1. In general, primes mod *M* are "lumpily" distributed, with some residues trailing others for long (sometimes extremely long) stretches; however Littlewood proved that every residue will lead at some point, and in fact will lead an infinite number of times. There's a good overview in this [excellent paper](https://dms.umontreal.ca/~andrew/PDF/PrimeRace.pdf) by Andrew Granville and Greg Martin.
 
-Mike's initial question was about primes mod 100. There are 40 possible residues, and 39 of them are known to lead at some point; the last of those is 43, which takes the lead at 11342219743. Only 41 has never been in front, so naturally we'd like to find the place where it takes the lead (which it must, eventually).
+Mike's initial question was about primes mod 100. There are 40 possible residues, and 39 of them are known to lead at some point; the last of those is 43, which takes the lead at 11342219743. Only 41 has never been in front, so naturally we'd like to find the place where it takes the lead (which it must, eventually). This is now in the OEIS as [A397338](https://oeis.org/A397338).
 
 Some other races we'll look at:
 - [A390417](https://oeis.org/A390417) - For mod 10, there are four possible residues (1, 3, 7, and 9). Look for when each of the 24 possible "leaderboard" rankings occurs. Five of the possible rankings had not been found.
@@ -33,6 +33,8 @@ If we find a block where 41 passes all the other residues, we'll have to rerun t
 For simpler 2-way races, like the residue +/-1 race, there's no doubt -- if 1's largest lead is greater than its starting deficit, then it takes the lead within this block. But we'll still need to rerun in safe mode to find exactly where.
 
 For the mod-10 "leaderboard" race, we track the largest lead of every residue over every other residue (4*3 = 12 values total), so that we can check whether, within each block, first place is ahead of second, third, and fourth; second is ahead of third and fourth; and third is ahead of fourth. Again, we'll need to rerun to check whether this leaderboard really happens, and find exactly where.
+
+Shortly after the original results were entered into OEIS, Hugo Pfoertner, Norman Luhn, and Naidan Bayarmagnai pointed out that my count of twin primes up to 10<sup>19</sup> was significantly lower than expected. Looking more closely at the more than 4 million blocks that comprised the full calculation, there was one anomalous block which seemed to have exited its loop early, despite reporting a successful completion -- all its counts were self-consistent, but too low. Rerunning that block gave counts more in line with expectations, and the process of correcting all the many sequences listed at the bottom of this page is underway.
 
 ## Results
 
@@ -58,9 +60,9 @@ Here is a log-scale graph which shows which ranking is in the lead up to 10<sup>
 
 ### 1 vs. -1, mod 12 and mod 24
 
-In this race, we're looking for when residue 1 overtakes residue -1, for moduli 12 and 24. (All other moduli under 1000 are already known, in [A275939](https://oeis.org/A275939).) In a comment in the OEIS, Kevin Ford says: "In the case of the mod 12 race, it is probably around exp(187.536), or about 2.79 x 10<sup>81</sup>.  For the mod 24 race, it's about exp(43.453)=7.437... x 10<sup>18</sup>."
+In this race, we're looking for when residue 1 overtakes residue -1, for moduli 12 and 24. (All other moduli under 1000 are already known, in [A275939](https://oeis.org/A275939).) In a comment in the OEIS, Kevin Ford says: "In the case of the mod 12 race, it is probably around exp(187.536), or about 2.79 x 10<sup>81</sup>. For the mod 24 race, it's about exp(43.453)=7.437... x 10<sup>18</sup>."
 
-Sure enough, I found that for mod 24, residue 1 takes the lead over -1 at prime 7,390,188,907,282,602,529, very close to Ford's prediction. And, not surprisingly, 1 never leads for mod 12 up to 10<sup>19</sup>.
+Sure enough, I found that for mod 24, residue 1 takes the lead over -1 at prime 7,390,203,183,507,483,529, very close to Ford's prediction. And, not surprisingly, 1 never leads for mod 12 up to 10<sup>19</sup>.
 
 ### 1 vs. 7, mod 12
 
@@ -73,7 +75,7 @@ After that, 7 leads 1 all the way out to 10<sup>19</sup>.
 
 ### Odious vs. evil
 
-The race between odious and evil primes is fascinating. At first glance, one might expect primes to have as little structure in their binary bits as they do in their decimal digits, and that therefore the chances of having an even or odd number of 1's in binary would be balanced. However this appears not to be the case. [Vladimir Shevelev](https://arxiv.org/abs/0706.0786) gives some explanation as to why, and conjectures that after the first few primes, odious primes always lead. This is certainly true as far as 10<sup>19</sup>. But what I find really striking is that the cumulative lead of odious over evil shows a fractal structure which repeats every power of 4, as seen in these graphs, which have *n* on the X axis and the delta between odious and evil primes up to *n* on the Y, over vastly different ranges:
+The race between odious and evil primes is fascinating. At first glance, one might expect primes to have as little structure in their binary bits as they do in their decimal digits, and that therefore the chances of having an even or odd number of 1's in binary would be balanced. However this appears not to be the case. [Vladimir Shevelev](https://arxiv.org/abs/0706.0786) gives some explanation as to why, and conjectures that after the first few primes, odious primes always lead. This is certainly true as far as 10<sup>19</sup>. But what I find really striking is that the cumulative lead of odious over evil shows a fractal structure, as seen in these graphs, which have *n* on the X axis and the delta between odious and evil primes up to *n* on the Y, over vastly different ranges:
 
 [![Excess of odious vs. evil primes from 0 to 2^35](odious-00-35.png)](odious-00-35.png)
 [![Excess of odious vs. evil primes from 0 to 2^63](odious-00-63.png)](odious-00-63.png)
